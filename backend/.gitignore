@@ -1,0 +1,31 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Prisma generated client
+/generated/prisma/
+
+# Build output
+.next/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor folders
+.vscode/
+.idea/
+
+# Local dev tools
+*.local
+
+# Git large file exclusion
+node_modules/@next/swc-win32-x64-msvc/next-swc.win32-x64-msvc.node
