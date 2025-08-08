@@ -1,9 +1,7 @@
 "use client";
 import React from 'react'
 import Link from 'next/link'
-import {Button} from '../ui/button'
-import SignIn from '../../app/auth/Signin/[[...signin]]/page'
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, SignUpButton} from '@clerk/nextjs'
 const Nav = () => {
 
 
@@ -34,8 +32,10 @@ const Nav = () => {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <UserButton />
-            </SignedIn>
+               <Link href="/dashboard"  className="bg-teal-600 text-white hover:bg-teal-700 transition-colors px-4 py-2 rounded-md">
+                  Dashboard
+                </Link>
+             </SignedIn>
         
       </header>
     )
