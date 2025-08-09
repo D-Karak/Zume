@@ -21,4 +21,37 @@ model User {
   lastName  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  resumes   Resume[] // One-to-many relationship with Resume
+}
+
+model Resume {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Link to the user who owns this resume
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  // Personal Information
+  fullName    String
+  email       String
+  phone       String
+  location    String
+  summary     String?
+
+  // Experience
+  company     String
+  position    String
+  duration    String
+  description String?
+
+  // Education
+  school      String
+  degree      String
+  year        String
+
+  // Skills
+  skills      String[]
 }

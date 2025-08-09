@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/dashboard/resume/step-personal-info.jsx", "src/components/dashboard/resume-builder.tsx", "src/components/dashboard/resume.jsx"],
   "exclude": ["node_modules"]
 }
