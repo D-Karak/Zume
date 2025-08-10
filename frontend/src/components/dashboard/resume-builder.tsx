@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowLeft, ArrowRight, User, Briefcase, GraduationCap, Award, Eye, Download } from 'lucide-react'
 import { useAuth } from "@clerk/nextjs"
 import { saveResume } from "@/lib/api/resume/resume"
+import { PDFDownloadButton } from "./resume-pdf"
 
 // Define the structure of our resume data
 interface ResumeData {
@@ -336,11 +337,11 @@ export function ResumeBuilder({ onBack, editingResume }: ResumeBuilderProps) {
                   {isSubmitting ? 'Saving...' : 'Save Resume'}
                 </Button>
                 <Button
-                  onClick={handleDownloadPDF}
+                  variant="default"
                   className="bg-gray-900 hover:bg-gray-800 text-white"
+                  asChild
                 >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download PDF
+                  <PDFDownloadButton data={formData} />
                 </Button>
               </div>
             </div>

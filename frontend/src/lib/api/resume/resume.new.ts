@@ -53,3 +53,16 @@ export const saveResume = async (data: ResumeFormData, userId: string) => {
     throw new Error(error.response?.data?.error || 'Failed to save resume');
   }
 };
+
+export const getUserResume = async(userId: string) => {
+  try {
+    console.log('Making API request to get user resume:', { 
+      url: `/resumes/${userId}`
+    });
+    const res = await api.get(`/resumes/${userId}`);
+    return res.data;
+  } catch (error: any) {
+    console.error("Error fetching user resume:", error.response?.data || error.message);
+    throw error;
+  }
+};

@@ -75,10 +75,17 @@ router.post('/create', async (req, res) => {
 router.get('/user/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
-    const resumes = await prisma.resume.findMany({
-      where: { userId }
+    const id = await prisma.user.findUnique({
+        where: { clerkId: userId }
     });
-    res.json(resumes);
+    
+    if (!id) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const resumes = await prisma.resume.findMany({
+      where: { id }
+    });
+    res.status(200).json(resumes);
   } catch (error) {
     console.error('Error fetching resumes:', error);
     res.status(500).json({ error: 'Failed to fetch resumes' });
