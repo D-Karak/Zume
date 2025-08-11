@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs"; // To get Clerk userId
-import api from "@/lib/api/axiosinstance"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,30 +23,10 @@ export function Resume() {
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch resumes for this user
-  useEffect(() => {
-    if (!userId) return; // Wait until Clerk loads the user
-
-    const fetchResumes = async () => {
-      try {
-        const res = await api.get(`resumes/user/${userId}`);
-        console.log('Fetched resumes:', res.data);
-        setResumes(res.data);
-      } catch (err) {
-        console.error("Error fetching resumes:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchResumes();
-  }, [userId]);
-
   const handleCreateNew = () => {
     setEditingResume(null);
     setView("create");
   };
-
   const handleEdit = (resume: Resume) => {
     setEditingResume(resume);
     setView("create");

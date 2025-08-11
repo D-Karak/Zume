@@ -20,17 +20,10 @@ async function createUser(data) {
         lastName: userData.last_name || null,
       }
     });
-    console.log("User created successfully:", newUser.id);
-    // console.log("User data:", {
-    //   clerkId: userData.id,
-    //   email,
-    //   firstName: userData.first_name || null,
-    //   lastName: userData.last_name || null,
-    // });   
+    console.log("User created successfully:", newUser.id);  
     
   } catch (error) {
     console.error("Error creating user:", error);
-    // Remove res.status... (res is not defined here)
   }
 };
 

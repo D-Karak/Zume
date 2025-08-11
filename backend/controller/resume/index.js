@@ -1,0 +1,174 @@
+const { PrismaClient } = require('../../generated/prisma');
+const prisma = new PrismaClient();
+//create resume
+
+const createResume = async (req, res) => {
+  try {
+    const { clerkId, resumeData, workExperiences, educations } = req.body; 
+
+    //  Find the user
+    const user = await prisma.user.findUnique({
+      where: { clerkId }
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Create resume with related work experience + education in one transaction
+    const resume = await prisma.resume.create({
+      data: {
+        userId: user.id,
+        jobTitle: resumeData.jobTitle,
+        fullName: resumeData.fullName,
+        email: resumeData.email,
+        phone: resumeData.phone,
+        country: resumeData.country,
+        state: resumeData.state,
+        city: resumeData.city,
+        linkedinUrl: resumeData.linkedinUrl,
+        personalSite: resumeData.personalSite,
+        skills: resumeData.skills || [],
+
+        // Create Work Experiences
+        workExperiences: {
+          create: workExperiences?.map(exp => ({
+            position: exp.position,
+            company: exp.company,
+            startDate: exp.startDate ? new Date(exp.startDate) : null,
+            endDate: exp.endDate ? new Date(exp.endDate) : null,
+            description: exp.description
+          })) || []
+        },
+
+        // Create Educations
+        educations: {
+          create: educations?.map(edu => ({
+            degree: edu.degree,
+            university: edu.school,
+            startDate: edu.startDate ? new Date(edu.startDate) : null,
+            endDate: edu.endDate ? new Date(edu.endDate) : null
+          })) || []
+        }
+      },
+      include: {
+        workExperiences: true,
+        educations: true
+      }
+    });
+
+    res.status(201).json({ message: "Resume created successfully", resume });
+
+  } catch (error) {
+    console.error("Something went wrong", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const getAllResume=  async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const id = await prisma.user.findUnique({
+        where: { clerkId: userId }
+    });
+    
+    if (!id) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const resumes = await prisma.resume.findMany({
+      where: { id }
+    });
+    res.status(200).json(resumes);
+  } catch (error) {
+    console.error('Error fetching resumes:', error);
+    res.status(500).json({ error: 'Failed to fetch resumes' });
+  }
+}
+
+ const getResumeById = async (req, res) => {
+  try {
+    const { resumeId } = req.params; 
+    if (!resumeId) {
+      return res.status(400).json({ message: "Resume ID is required" });
+    }
+
+    const resume = await Resume.findById(resumeId);
+
+    if (!resume) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
+
+    res.status(200).json(resume);
+  } catch (error) {
+    console.error("Error fetching resume:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const updateResume = async (req, res) => {
+  try {
+    const { resumeId } = req.params;
+    const { resumeData, workExperiences, educations } = req.body;
+    if (!resumeId) {
+      return res.status(400).json({ message: "Resume ID is required" });
+    }
+    const updatedResume = await prisma.resume.update({
+      where: { id: resumeId },
+      data: {
+        jobTitle: resumeData.jobTitle,
+        fullName: resumeData.fullName,
+        email: resumeData.email,
+        phone: resumeData.phone,
+        country: resumeData.country,
+        state: resumeData.state,
+        city: resumeData.city,
+        linkedinUrl: resumeData.linkedinUrl,
+        personalSite: resumeData.personalSite,
+        skills: resumeData.skills || [],
+        workExperiences: {
+          deleteMany: {}, // Clear existing work experiences
+          create: workExperiences?.map(exp => ({
+            position: exp.position,
+            company: exp.company,
+            startDate: exp.startDate ? new Date(exp.startDate) : null,
+            endDate: exp.endDate ? new Date(exp.endDate) : null,
+            description: exp.description
+          })) || []
+        },
+        educations: {
+          deleteMany: {}, // Clear existing educations
+          create: educations?.map(edu => ({
+            degree: edu.degree,
+            university: edu.school,
+            startDate: edu.startDate ? new Date(edu.startDate) : null,
+            endDate: edu.endDate ? new Date(edu.endDate) : null
+          })) || []
+        }
+      },
+      include: {  
+        workExperiences: true,
+        educations: true
+      }
+    });
+    res.status(200).json({ message: "Resume updated successfully", resume: updatedResume });
+  } catch (error) {
+    console.error("Error updating resume:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const deleteResume = async (req, res) => {
+  try {
+    const { resumeId } = req.params;
+    if (!resumeId) {
+      return res.status(400).json({ message: "Resume ID is required" });
+    }
+    const deletedResume = await prisma.resume.delete({
+      where: { id: resumeId }
+    });
+    res.status(200).json({ message: "Resume deleted successfully", resume: deletedResume });
+  } catch (error) {
+    console.error("Error deleting resume:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }}
+module.exports={createResume,getAllResume,getResumeById,updateResume,deleteResume}

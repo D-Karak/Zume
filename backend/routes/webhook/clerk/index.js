@@ -17,7 +17,7 @@ router.post('/clerk-webhook', express.raw({ type: 'application/json' }), async (
       await createUser(evt.data);
     }
 
-    return res.send('Webhook received');
+    return res.status(200).json({massage:'webhook received',});
   } catch (err) {
     console.error('Error verifying webhook:', err);
     return res.status(400).send('Error verifying webhook');

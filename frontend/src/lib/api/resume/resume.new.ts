@@ -1,68 +1,99 @@
 import api from "@/lib/api/axiosinstance";
 
-export interface ResumeFormData {
-  personalInfo: {
-    fullName: string;
-    email: string;
-    phone: string;
-    location: string;
-    summary: string;
-  };
-  experience: {
-    company: string;
-    position: string;
-    duration: string;
-    description: string;
-  };
-  education: {
-    school: string;
-    degree: string;
-    year: string;
-  };
-  skills: string;
+export interface ResumeData {
+  jobTitle: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  country: string;
+  state: string;
+  city: string;
+  linkedinUrl?: string;
+  personalSite?: string;
+  skills: string[];
 }
 
-export const saveResume = async (data: ResumeFormData, userId: string) => {
+export interface WorkExperience {
+  position?: string;
+  company?: string;
+  startDate?: string;
+  endDate?: string;
+  description?: string;
+}
+
+export interface Education {
+  degree?: string;
+  school?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export const saveResume = async (
+  clerkId: string,
+  resumeData: ResumeData,
+  workExperiences: WorkExperience[],
+  educations: Education[]
+) => {
   try {
-    // Convert nested form data to flat structure
-    const resumePayload = {
-      ...data.personalInfo,
-      ...data.experience,
-      ...data.education,
-      skills: data.skills.split(',').map(skill => skill.trim())
-    };
-
-    console.log('Sending resume data to API:', {
-      url: '/resumes/create',
-      payload: resumePayload,
-      userId
+    const response = await api.post("/resumes/create", {
+      clerkId,
+      resumeData,
+      workExperiences,
+      educations,
     });
 
-    const response = await api.post('/resumes/create', {
-      ...resumePayload,
-      userId
-    });
-
-    console.log('Resume saved successfully:', response.data);
+    console.log("Resume saved successfully:", response.data);
     return response.data;
   } catch (error: any) {
-    console.error('Failed to save resume:', {
-      status: error.response?.status,
-      message: error.response?.data?.error || error.message
-    });
-    throw new Error(error.response?.data?.error || 'Failed to save resume');
+    console.error("Failed to save resume:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.error || "Failed to save resume");
   }
 };
 
-export const getUserResume = async(userId: string) => {
+export const getUserResumes = async (clerkId: string) => {
   try {
-    console.log('Making API request to get user resume:', { 
-      url: `/resumes/${userId}`
-    });
-    const res = await api.get(`/resumes/${userId}`);
+    const res = await api.get(`/resumes/user/${clerkId}`);
     return res.data;
   } catch (error: any) {
-    console.error("Error fetching user resume:", error.response?.data || error.message);
+    console.error("Error fetching resumes:", error.response?.data || error.message);
     throw error;
   }
 };
+
+export const getResumeById = async (clerkId: string, resumeId: string) => {
+  try {
+    const res = await api.get(`/resumes/user/${clerkId}/${resumeId}`);
+    return res.data;
+  } catch (error: any) {
+    console.error("Error fetching resume:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const updateResume = async (
+  resumeId: string,
+  resumeData: ResumeData,
+  workExperiences: WorkExperience[],
+  educations: Education[]
+) => {
+  try {
+    const res = await api.patch(`/resumes/update/${resumeId}`, {
+      resumeData,
+      workExperiences,
+      educations,
+    });
+    return res.data;
+  } catch (error: any) {
+    console.error("Error updating resume:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const deleteResume = async (resumeId: string) => {
+  try {
+    const res = await api.delete(`/resumes/delete/${resumeId}`);  
+    return res.data;
+  } catch (error: any) {
+    console.error("Error deleting resume:", error.response?.data || error.message);
+    throw error;
+  }}

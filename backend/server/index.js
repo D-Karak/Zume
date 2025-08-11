@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/webhook", clerkWebhookRouter);
-app.use("/api/resumes", resumeRouter);
+app.use("/api/resume", resumeRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server!");
