@@ -30,12 +30,12 @@ export interface Education {
 
 export const saveResume = async (
   clerkId: string,
-  resumeData: ResumeData,
-  workExperiences: WorkExperience[],
-  educations: Education[]
+  resumeData: ResumeData | "",
+  workExperiences: WorkExperience[] | [],
+  educations: Education[] | []
 ) => {
   try {
-    const response = await api.post("/resumes/create", {
+    const response = await api.post("/resume/create", {
       clerkId,
       resumeData,
       workExperiences,
@@ -52,7 +52,7 @@ export const saveResume = async (
 
 export const getUserResumes = async (clerkId: string) => {
   try {
-    const res = await api.get(`/resumes/user/${clerkId}`);
+    const res = await api.get(`/resume/user/${clerkId}`);
     return res.data;
   } catch (error: any) {
     console.error("Error fetching resumes:", error.response?.data || error.message);
@@ -62,7 +62,7 @@ export const getUserResumes = async (clerkId: string) => {
 
 export const getResumeById = async (clerkId: string, resumeId: string) => {
   try {
-    const res = await api.get(`/resumes/user/${clerkId}/${resumeId}`);
+    const res = await api.get(`/resume/user/${clerkId}/${resumeId}`);
     return res.data;
   } catch (error: any) {
     console.error("Error fetching resume:", error.response?.data || error.message);
@@ -71,17 +71,11 @@ export const getResumeById = async (clerkId: string, resumeId: string) => {
 };
 
 export const updateResume = async (
-  resumeId: string,
-  resumeData: ResumeData,
-  workExperiences: WorkExperience[],
-  educations: Education[]
+  resumeId?: string,
+  data?:{}
 ) => {
   try {
-    const res = await api.patch(`/resumes/update/${resumeId}`, {
-      resumeData,
-      workExperiences,
-      educations,
-    });
+    const res = await api.put(`/resume/update/${resumeId}`, {...data});
     return res.data;
   } catch (error: any) {
     console.error("Error updating resume:", error.response?.data || error.message);
@@ -91,7 +85,7 @@ export const updateResume = async (
 
 export const deleteResume = async (resumeId: string) => {
   try {
-    const res = await api.delete(`/resumes/delete/${resumeId}`);  
+    const res = await api.delete(`/resume/delete/${resumeId}`);  
     return res.data;
   } catch (error: any) {
     console.error("Error deleting resume:", error.response?.data || error.message);

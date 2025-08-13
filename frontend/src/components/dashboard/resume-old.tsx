@@ -1,45 +1,57 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs"; // To get Clerk userId
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus, FileText, Eye, Download, Edit } from 'lucide-react';
-import { ResumeBuilder } from "./resume-builder";
+import { Plus, FileText, Eye, Download, Edit } from "lucide-react";
+import { getUserResumes, saveResume } from "@/lib/api/resume/resume.new";
 
 interface Resume {
   id: string;
-  name: string;
+  fullName: string;
   createdAt: string;
   updatedAt: string;
   status: "draft" | "completed";
 }
 
 export function Resume() {
-  const { userId } = useAuth(); // Clerk userId
-  const [view, setView] = useState<"list" | "create">("list");
-  const [editingResume, setEditingResume] = useState<Resume | null>(null);
+  const router = useRouter();
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const handleCreateNew = () => {
-    setEditingResume(null);
-    setView("create");
-  };
-  const handleEdit = (resume: Resume) => {
-    setEditingResume(resume);
-    setView("create");
-  };
+  const {user,isLoaded}= useUser();
+  const clerkId = user?.id
+  console.log("Clerk ID:", clerkId);
 
-  const handleBack = () => {
-    setView("list");
-    setEditingResume(null);
-  };
+  useEffect(() => {
+    if(!isLoaded || !clerkId) return;
+    
+    const fetchResumes = async () => {
+      try {
+        const res = await getUserResumes(clerkId);
+        setResumes(res);
+      } catch (err) {
+        console.error("Error fetching resumes:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResumes();
+  }, [clerkId,isLoaded]);
 
-  if (view === "create") {
-    return <ResumeBuilder onBack={handleBack} editingResume={editingResume} />;
-  }
+  const handleCreateNew = async () => {
+    if(!isLoaded || !clerkId) return;
+    try {
+      const res = await saveResume(clerkId,'', [], []);
+      const newResumeId = res.resume.id;
+      router.push(`/dashboard/resume/${newResumeId}/`);
+    } catch (err) {
+      console.error("Error creating resume:", err);
+    }
+  };
 
   if (loading) {
     return <p>Loading resumes...</p>;
@@ -60,7 +72,6 @@ export function Resume() {
         </Button>
       </div>
 
-      {/* Resume Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {resumes.map((resume) => (
           <Card key={resume.id} className="hover:shadow-md transition-shadow">
@@ -68,7 +79,7 @@ export function Resume() {
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg">{resume.name}</CardTitle>
+                  <CardTitle className="text-lg">{resume.fullName || "Untitled Resume"}</CardTitle>
                 </div>
                 <Badge
                   variant={resume.status === "completed" ? "default" : "secondary"}
@@ -85,7 +96,7 @@ export function Resume() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button size="sm" onClick={() => handleEdit(resume)}>
+                  <Button size="sm" onClick={() => router.push(`/dashboard/resume/${resume.id}/contact`)}>
                     <Edit className="w-4 h-4 mr-1" />
                     Edit
                   </Button>
@@ -103,23 +114,6 @@ export function Resume() {
           </Card>
         ))}
       </div>
-
-      {/* Empty State */}
-      {resumes.length === 0 && (
-        <Card className="text-center py-12">
-          <CardContent>
-            <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No resumes yet</h3>
-            <p className="text-muted-foreground mb-4">
-              Create your first professional resume to get started.
-            </p>
-            <Button onClick={handleCreateNew}>
-              <Plus className="w-4 h-4 mr-2" />
-              Create Your First Resume
-            </Button>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }

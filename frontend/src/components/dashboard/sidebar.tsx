@@ -19,6 +19,15 @@ const menuItems = [
 export function Sidebar() {
   const pathname = usePathname()
 
+  const isActive = (href: string, id: string) => {
+    if (id === "resume") {
+      // For resume, check if we're in any resume-related route
+      return pathname.startsWith("/dashboard/resume");
+    }
+    // For other items, use exact match
+    return pathname === href;
+  }
+
   return (
     <div className="w-64 bg-card border-r flex flex-col">
       {/* Logo */}
@@ -31,7 +40,7 @@ export function Sidebar() {
         {menuItems.map(({ id, label, icon: Icon, href }) => (
           <Link href={href} key={id}>
             <Button
-              variant={pathname === href ? "default" : "ghost"}
+              variant={isActive(href, id) ? "default" : "ghost"}
               className={clsx("w-full justify-start")}
             >
               <Icon className="mr-3 h-4 w-4" />

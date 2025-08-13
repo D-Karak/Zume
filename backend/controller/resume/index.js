@@ -4,7 +4,11 @@ const prisma = new PrismaClient();
 
 const createResume = async (req, res) => {
   try {
-    const { clerkId, resumeData, workExperiences, educations } = req.body; 
+    const { clerkId } = req.body;
+
+    if (!clerkId) {
+      return res.status(400).json({ message: "ClerkId is required" });
+    }
 
     //  Find the user
     const user = await prisma.user.findUnique({
@@ -15,49 +19,38 @@ const createResume = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Create resume with related work experience + education in one transaction
+    const emptyResumeData = {
+      jobTitle: "",
+      fullName: "",
+      email: "",
+      phone: "",
+      country: "",
+      state: "",
+      city: "",
+      linkedinUrl: "",
+      personalSite: "",
+      skills: []
+    };
+
+    // Create an empty resume
     const resume = await prisma.resume.create({
       data: {
         userId: user.id,
-        jobTitle: resumeData.jobTitle,
-        fullName: resumeData.fullName,
-        email: resumeData.email,
-        phone: resumeData.phone,
-        country: resumeData.country,
-        state: resumeData.state,
-        city: resumeData.city,
-        linkedinUrl: resumeData.linkedinUrl,
-        personalSite: resumeData.personalSite,
-        skills: resumeData.skills || [],
+        ...emptyResumeData,
+        skills: [],
 
-        // Create Work Experiences
+        // Initialize empty arrays for experiences and education
         workExperiences: {
-          create: workExperiences?.map(exp => ({
-            position: exp.position,
-            company: exp.company,
-            startDate: exp.startDate ? new Date(exp.startDate) : null,
-            endDate: exp.endDate ? new Date(exp.endDate) : null,
-            description: exp.description
-          })) || []
+          create: []
         },
-
-        // Create Educations
         educations: {
-          create: educations?.map(edu => ({
-            degree: edu.degree,
-            university: edu.school,
-            startDate: edu.startDate ? new Date(edu.startDate) : null,
-            endDate: edu.endDate ? new Date(edu.endDate) : null
-          })) || []
+          create: []
         }
-      },
-      include: {
-        workExperiences: true,
-        educations: true
       }
     });
 
-    res.status(201).json({ message: "Resume created successfully", resume });
+    // Send just the resume data
+    res.status(201).json(resume);
 
   } catch (error) {
     console.error("Something went wrong", error);
@@ -67,16 +60,16 @@ const createResume = async (req, res) => {
 
 const getAllResume=  async (req, res) => {
   try {
-    const { userId } = req.params;
-    const id = await prisma.user.findUnique({
+    const  {userId}  = req.params;
+    const user = await prisma.user.findUnique({
         where: { clerkId: userId }
     });
     
-    if (!id) {
+    if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
     const resumes = await prisma.resume.findMany({
-      where: { id }
+      where: { userId: user.id }
     });
     res.status(200).json(resumes);
   } catch (error) {
@@ -109,53 +102,72 @@ const updateResume = async (req, res) => {
   try {
     const { resumeId } = req.params;
     const { resumeData, workExperiences, educations } = req.body;
+
     if (!resumeId) {
       return res.status(400).json({ message: "Resume ID is required" });
     }
+
+    const dataToUpdate = {};
+
+    // Resume basic info update only if sent
+    if (resumeData) {
+      Object.assign(dataToUpdate, {
+        jobTitle: resumeData?.jobTitle,
+        fullName: resumeData?.fullName,
+        email: resumeData?.email,
+        phone: resumeData?.phone,
+        country: resumeData?.country,
+        state: resumeData?.state,
+        city: resumeData?.city,
+        linkedinUrl: resumeData?.linkedinUrl,
+        personalSite: resumeData?.personalSite,
+        skills: resumeData?.skills
+      });
+    }
+
+    // Work experiences update only if sent
+    if (workExperiences) {
+      dataToUpdate.workExperiences = {
+        deleteMany: {},
+        create: workExperiences.map(exp => ({
+          position: exp.position,
+          company: exp.company,
+          startDate: exp.startDate ? new Date(exp.startDate) : null,
+          endDate: exp.endDate ? new Date(exp.endDate) : null,
+          description: exp.description
+        }))
+      };
+    }
+
+    // Educations update only if sent
+    if (educations) {
+      dataToUpdate.educations = {
+        deleteMany: {},
+        create: educations.map(edu => ({
+          degree: edu.degree,
+          university: edu.school,
+          startDate: edu.startDate ? new Date(edu.startDate) : null,
+          endDate: edu.endDate ? new Date(edu.endDate) : null
+        }))
+      };
+    }
+
     const updatedResume = await prisma.resume.update({
       where: { id: resumeId },
-      data: {
-        jobTitle: resumeData.jobTitle,
-        fullName: resumeData.fullName,
-        email: resumeData.email,
-        phone: resumeData.phone,
-        country: resumeData.country,
-        state: resumeData.state,
-        city: resumeData.city,
-        linkedinUrl: resumeData.linkedinUrl,
-        personalSite: resumeData.personalSite,
-        skills: resumeData.skills || [],
-        workExperiences: {
-          deleteMany: {}, // Clear existing work experiences
-          create: workExperiences?.map(exp => ({
-            position: exp.position,
-            company: exp.company,
-            startDate: exp.startDate ? new Date(exp.startDate) : null,
-            endDate: exp.endDate ? new Date(exp.endDate) : null,
-            description: exp.description
-          })) || []
-        },
-        educations: {
-          deleteMany: {}, // Clear existing educations
-          create: educations?.map(edu => ({
-            degree: edu.degree,
-            university: edu.school,
-            startDate: edu.startDate ? new Date(edu.startDate) : null,
-            endDate: edu.endDate ? new Date(edu.endDate) : null
-          })) || []
-        }
-      },
-      include: {  
+      data: dataToUpdate,
+      include: {
         workExperiences: true,
         educations: true
       }
     });
+
     res.status(200).json({ message: "Resume updated successfully", resume: updatedResume });
   } catch (error) {
     console.error("Error updating resume:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 const deleteResume = async (req, res) => {
   try {
