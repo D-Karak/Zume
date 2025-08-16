@@ -14,15 +14,18 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
   }, [resumeData, form]);
 
   useEffect(() => {
-    const subscription = form.watch(() => {
-      const values = form.getValues();
-      setResumeData({
-        ...resumeData,
-        skills: values.skills,
-      });
-    });
-    return () => subscription.unsubscribe();
-  }, [form, setResumeData]);
+  const subscription = form.watch(() => {
+    const values = form.getValues();
+    const updatedData = {
+      ...resumeData,
+      skills: values.skills,
+    };
+    setResumeData(updatedData);
+  });
+
+  return () => subscription.unsubscribe();
+}, [form, setResumeData, resumeData]);
+
 
   return (
     <FormProvider {...form}>

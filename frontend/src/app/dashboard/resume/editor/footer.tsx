@@ -5,8 +5,9 @@ import { steps } from './step'; // Adjust the import path as necessary
 interface FooterProps {
     currentStep: string;
     setCurrentStep: (step: string) => void;
+    isSaving: boolean;
 }
-const footer = ({currentStep,setCurrentStep}:FooterProps) => {
+const footer = ({currentStep,setCurrentStep,isSaving}:FooterProps) => {
 
     const previousStep = steps.find(
         (_,index)=>steps[index+1]?.key===currentStep
@@ -33,7 +34,11 @@ const footer = ({currentStep,setCurrentStep}:FooterProps) => {
             <Button variant={"secondary"} asChild>
               <Link href="/dashboard/resume">Close</Link>
             </Button>
-            <p className="text-muted-foreground opacity-0">Saving...</p>
+            <p
+            className={`text-muted-foreground ${isSaving? ' opacity-100':'opacity-0'}`}
+          >
+            Saving...
+          </p>
           </div>
         </div>
       </footer>

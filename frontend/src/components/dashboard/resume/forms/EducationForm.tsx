@@ -46,13 +46,10 @@ const EducationForm = ({ resumeData, setResumeData }: EditorFormProps) => {
     form.setValue("educations", [
       ...currentEducations,
       {
-        school: "",
+        university: "",
         degree: "",
-        fieldOfStudy: "",
         startDate: "",
         endDate: "",
-        grade: "",
-        description: "",
       },
     ]);
   };
@@ -94,7 +91,7 @@ const EducationForm = ({ resumeData, setResumeData }: EditorFormProps) => {
 
               <FormField
                 control={form.control}
-                name={`educations.${index}.school`}
+                name={`educations.${index}.university`}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>School / University</FormLabel>
@@ -113,32 +110,6 @@ const EducationForm = ({ resumeData, setResumeData }: EditorFormProps) => {
                     <FormLabel>Degree</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="e.g., Bachelor of Science" />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name={`educations.${index}.fieldOfStudy`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Field of Study</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="e.g., Computer Science" />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name={`educations.${index}.grade`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Grade / Score</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="e.g., 3.9 GPA" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -172,22 +143,7 @@ const EducationForm = ({ resumeData, setResumeData }: EditorFormProps) => {
                 />
               </div>
 
-              <FormField
-                control={form.control}
-                name={`educations.${index}.description`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        placeholder="Describe achievements, activities, etc."
-                        className="h-24"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+              
             </div>
           ))}
 

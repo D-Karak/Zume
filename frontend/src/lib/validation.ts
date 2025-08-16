@@ -1,3 +1,4 @@
+
 import {file, z} from "zod";
 const optionalString = z.string().trim().optional().or(z.literal(""));
 export const generateInfoScema=z.object({
@@ -21,8 +22,8 @@ export const personalInfoSchema = z.object({
     email: optionalString,
     phone: optionalString,
     summary: optionalString,
-    linkedinUrl: optionalString,
-    personalSite: optionalString,
+    linkedIn: optionalString,
+    personalWebsite: optionalString,
 })
 export type PersonalInfoValues = z.infer<typeof personalInfoSchema>;
 
@@ -52,13 +53,10 @@ export const educationSchema = z.object({
   educations: z
     .array(
       z.object({
-        school: optionalString,
+        university: optionalString,
         degree: optionalString,
-        fieldOfStudy: optionalString,
         startDate: optionalString,
         endDate: optionalString,
-        grade: optionalString,
-        description: optionalString,
       }),
     )
     .optional(),
@@ -72,8 +70,24 @@ z.infer<typeof educationSchema>["educations"]
 
 // Skills schema
 export const skillsSchema = z.object({
-  skills: optionalString, // Comma-separated skills
+  skills: z
+    .union([
+      z.string(),
+      z.array(z.string()),
+    ])
+    .transform((val) => {
+      if (Array.isArray(val)) {
+        return val.map((s) => s.trim()).filter(Boolean);
+      }
+      return val
+        ? val.split(",").map((s) => s.trim()).filter(Boolean)
+        : [];
+    })
+    .optional(),
 });
+
+
+
 
 export type SkillsValues = z.infer<typeof skillsSchema>;
 export type Skill = NonNullable<z.infer<typeof skillsSchema>["skills"]>[number];
@@ -90,3 +104,25 @@ export type ResumeValues = Omit<z.infer<typeof resumeSchema>,"photo"> & {
     id?: string
     photo?: File | string | undefined
 };
+
+export const emptyResume: ResumeValues = {
+  title: "",
+  description: "",
+  firstName: "",
+  lastName: "",
+  jobTitle: "",
+  city: "",
+  country: "",
+  email: "",
+  phone: "",
+  summary: "",
+  linkedIn: "",
+  personalWebsite: "",
+  workExperiences: [],
+  educations: [],
+  skills: [],  
+  id: undefined,
+  photo: undefined,
+};
+
+

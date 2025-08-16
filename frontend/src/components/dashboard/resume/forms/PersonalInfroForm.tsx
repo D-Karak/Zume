@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/type";
 import { personalInfoSchema, PersonalInfoValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,8 +26,9 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
       country: resumeData.country || "",
       phone:  resumeData.phone || "",
       email:  resumeData.email || "",
-      linkedinUrl: resumeData.linkedinUrl || "",
-      personalSite: resumeData.personalSite || "",
+      summary: resumeData.summary || "",
+      linkedIn: resumeData.linkedIn || "",
+      personalWebsite: resumeData.personalWebsite || "",
     },
   });
 
@@ -182,7 +184,7 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
           />
           <FormField
             control={form.control}
-            name="linkedinUrl"
+            name="linkedIn"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Linkedin URL</FormLabel>
@@ -195,12 +197,25 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
           />
           <FormField
             control={form.control}
-            name="personalSite"
+            name="personalWebsite"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Personal Site URL</FormLabel>
                 <FormControl>
                   <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="summary"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Summary</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={3}/>
                 </FormControl>
                 <FormMessage />
               </FormItem>

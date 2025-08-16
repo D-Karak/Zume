@@ -1,93 +1,62 @@
 import api from "@/lib/api/axiosinstance";
+import { resumeSchema, ResumeValues } from "@/lib/validation";
 
-export interface ResumeData {
-  jobTitle: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  country: string;
-  state: string;
-  city: string;
-  linkedinUrl?: string;
-  personalSite?: string;
-  skills: string[];
-}
 
-export interface WorkExperience {
-  position?: string;
-  company?: string;
-  startDate?: string;
-  endDate?: string;
-  description?: string;
-}
 
-export interface Education {
-  degree?: string;
-  school?: string;
-  startDate?: string;
-  endDate?: string;
-}
-
-export const saveResume = async (
-  clerkId: string,
-  resumeData: ResumeData | "",
-  workExperiences: WorkExperience[] | [],
-  educations: Education[] | []
-) => {
-  try {
-    const response = await api.post("/resume/create", {
-      clerkId,
-      resumeData,
-      workExperiences,
-      educations,
-    });
-
-    console.log("Resume saved successfully:", response.data);
-    return response.data;
-  } catch (error: any) {
-    console.error("Failed to save resume:", error.response?.data || error.message);
-    throw new Error(error.response?.data?.error || "Failed to save resume");
-  }
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 };
-
-export const getUserResumes = async (clerkId: string) => {
-  try {
-    const res = await api.get(`/resume/user/${clerkId}`);
-    return res.data;
-  } catch (error: any) {
-    console.error("Error fetching resumes:", error.response?.data || error.message);
-    throw error;
+export const saveResume = async (values: ResumeValues, clerkId:string|null) => {
+  if(clerkId === null) {
+    throw new Error("User not authenticated");
   }
-};
-
-export const getResumeById = async (clerkId: string, resumeId: string) => {
-  try {
-    const res = await api.get(`/resume/user/${clerkId}/${resumeId}`);
-    return res.data;
-  } catch (error: any) {
-    console.error("Error fetching resume:", error.response?.data || error.message);
-    throw error;
+  const {id}= values;
+  const {
+    photo,
+    workExperiences,
+    educations,
+    ...resumeData
+  }=resumeSchema.parse(values);
+  // console.log(values);
+  // Convert photo to base64 if it's a File object
+  const base64Photo = photo instanceof File ? await fileToBase64(photo) : undefined;
+  if (!clerkId) {
+    throw new Error("User not authenticated");
   }
-};
-
-export const updateResume = async (
-  resumeId?: string,
-  data?:{}
-) => {
-  try {
-    const res = await api.put(`/resume/update/${resumeId}`, {...data});
-    return res.data;
-  } catch (error: any) {
-    console.error("Error updating resume:", error.response?.data || error.message);
-    throw error;
+  const response = await api.post('/resume/create', {
+    clerkId,
+    resumeId:id,
+    photo: base64Photo,
+    workExperiences,
+    educations,
+    ...resumeData
+  });
+  console.log("resumeId",id)
+  console.log({workExperiences, educations, photo,...resumeData });
+    console.log("User ID:", clerkId);
+  
+  return response.data;
   }
-};
 
-export const deleteResume = async (resumeId: string) => {
-  try {
-    const res = await api.delete(`/resume/delete/${resumeId}`);  
-    return res.data;
-  } catch (error: any) {
-    console.error("Error deleting resume:", error.response?.data || error.message);
-    throw error;
-  }}
+  export const resumeToEdit = async (resumeId: string, clerkId: string) => {
+    console.log(resumeId,clerkId)
+    if (!clerkId) {
+      throw new Error("User not authenticated");
+    }
+
+    try {
+      if(resumeId && clerkId){
+        const response = await api.get(`/resume/user/${clerkId}/${resumeId}`);
+        console.log("Fetched resume data:", response.data);
+      return response.data;
+      }
+    } catch (error) {
+      console.error("Error fetching resume:", error);
+      throw error;
+    }
+  };

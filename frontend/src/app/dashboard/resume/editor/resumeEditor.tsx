@@ -5,20 +5,52 @@ import ResumeForm from "@/components/dashboard/resume/ResumeForm";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Breadcrumbs from "./breadCrumbs";
-import { steps } from "./step"; // Adjust the import path as necessary
+import { steps } from "./step";
 import { useSearchParams } from "next/navigation";
 import Footer from "./footer";
-import { ResumeValues } from "@/lib/validation";
-const ResumeEditor = () => {
+import { ResumeValues,emptyResume } from "@/lib/validation";
+import { ResumePreview } from "@/components/dashboard/resume/resumePreview";
+import useUnloadWarning from "@/hooks/useUnloadWarning";
+import { useAutoSave } from "@/hooks/useAutoSave";
+import { mapToResumeValues } from "@/lib/utils";
+
+interface ResumeEditorProps {
+  resumetoEdit: any | null;
+}
+
+const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
+  // console.log("resumetoEdit", resumetoEdit);
+  console.log(mapToResumeValues(resumetoEdit));
+
   const searchParams = useSearchParams();
-  const [resumeData, setResumeData] = useState<ResumeValues>({})
+  
+  // Initialize state with mapped values if resumetoEdit exists, otherwise empty object
+  const [resumeData, setResumeData] = useState<ResumeValues>(() => {
+    if (!resumetoEdit) return emptyResume;
+    try {
+      console.log("mapValue",mapToResumeValues(resumetoEdit));
+      return mapToResumeValues(resumetoEdit);
+      
+    } catch (error) {
+      console.error("Error mapping resume data:", error);
+      return emptyResume; // Fallback to empty resume if mapping fails
+    }
+  });
+  // console.log("resumetoEdit", resumeData);
+
+  const { isSaving, hasUnsavedChanges } = useAutoSave(resumeData) ?? {
+    isSaving: false,
+    hasUnsavedChanges: false,
+  };
+
+  useUnloadWarning(hasUnsavedChanges);
+
   const currentStep = searchParams.get("step") || steps[0].key;
   function setStep(key: string) {
     const newSearchParams = new URLSearchParams(searchParams.toString());
     newSearchParams.set("step", key);
     window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
   }
-
   const FormComponent =
     steps.find((s) => s.key === currentStep)?.component || steps[0].component;
 
@@ -37,22 +69,24 @@ const ResumeEditor = () => {
         <div className="absolute bottom-0 top-0 flex w-full">
           <div className="w-full overflow-y-auto p-3 md:w-1/2 space-y-6">
             <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
-            {FormComponent && <FormComponent 
-            resumeData={resumeData}
-            setResumeData={setResumeData}
-            />}
+            {FormComponent && (
+              <FormComponent
+                resumeData={resumeData}
+                setResumeData={setResumeData}
+              />
+            )}
           </div>
-          <div className="grow md:border-r"/>
-        <div className="hidden w-1/2 md:flex">
+          <div className="grow md:border-r" />
+
           {/* Right side content, e.g., preview or additional info */}
-          
-          <pre>
-            {JSON.stringify(resumeData, null, 2)}
-          </pre>
-        </div>
+          <ResumePreview resumeData={resumeData} />
         </div>
       </main>
-      <Footer currentStep={currentStep} setCurrentStep={setStep} />
+      <Footer
+        currentStep={currentStep}
+        setCurrentStep={setStep}
+        isSaving={isSaving}
+      />
     </div>
   );
 };

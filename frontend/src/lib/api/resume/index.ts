@@ -13,16 +13,59 @@ export interface ResumeData {
   linkedinUrl: string;
   personalSite: string;
   skills: string[];
-  // Work Experience and Education will be handled separately
+  // Work Experience and Education
+  workExperience: Array<{
+    position: string;
+    company: string;
+    startDate: Date;
+    endDate?: Date;
+    description: string;
+  }>;
+  education: Array<{
+    degree: string;
+    university: string;
+    startDate: Date;
+    endDate?: Date;
+  }>;
 }
 
-// Function to create an empty resume and get its ID
-export const createEmptyResume = async (clerkId: string) => {
+// Function to create a new resume with initial data
+export const createResume = async (clerkId: string, initialData?: Partial<ResumeData>) => {
   try {
-    const response = await api.post('/resume/create', { clerkId });
+    const response = await api.post('/resume/create', { 
+      clerkId,
+      ...initialData 
+    });
     return response.data;
   } catch (error) {
-    console.error('Error creating empty resume:', error);
+    console.error('Error creating resume:', error);
+    throw error;
+  }
+};
+
+// Function to save or update resume (handles both creation and updates)
+export const saveResume = async (data: Partial<ResumeData> & { clerkId: string }) => {
+  try {
+    // If no resumeId, create new resume
+    if (!data.id) {
+      return await createResume(data.clerkId, data);
+    }
+    
+    // If resumeId exists, update existing resume
+    return await autoSaveResume(data.id, data);
+  } catch (error) {
+    console.error('Error saving resume:', error);
+    throw error;
+  }
+};
+
+// Function to auto-save resume
+export const autoSaveResume = async (resumeId: string, data: Partial<ResumeData>) => {
+  try {
+    const response = await api.patch(`/resume/auto-save/${resumeId}`, data);
+    return response.data;
+  } catch (error) {
+    console.error('Error auto-saving resume:', error);
     throw error;
   }
 };
