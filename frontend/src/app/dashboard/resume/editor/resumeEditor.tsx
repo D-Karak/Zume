@@ -55,7 +55,7 @@ const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
     steps.find((s) => s.key === currentStep)?.component || steps[0].component;
 
   return (
-    <div className="flex min-h-[calc(100vh-65px)] flex-col">
+    <div className="flex w-full min-h-[150vh] grow flex-col">
       <header className="space-y-1.5 border-b px-6 py-5">
         <h1 className="text-2xl font-semibold tracking-tight">
           Design your Resume

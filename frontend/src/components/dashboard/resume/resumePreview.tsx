@@ -3,11 +3,15 @@ import { useRef } from "react";
 import { ResumeValues } from "@/lib/validation";
 import { useReactToPrint } from "react-to-print";
 import { Download } from "lucide-react";
+import { cn } from "@/lib/utils";
+import useDimensions from "@/hooks/useDimensions";
 interface ResumePreviewProps {
   resumeData: ResumeValues;
+  contentRef?: React.Ref<HTMLDivElement>;
+  className?: string;
 }
 
-export function ResumePreview({ resumeData }: ResumePreviewProps) {
+export function ResumePreview({ resumeData,contentRef,className }: ResumePreviewProps) {
   const {
     title,
     photo,
@@ -26,6 +30,8 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
     educations,
   } = resumeData;
 
+  // const containerRef = useRef<HTMLDivElement>(null);
+  // const {width, height} = useDimensions(containerRef)
   // Attach ref for printing
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -86,23 +92,26 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
   });
 
   return (
-    <div className="hidden w-1/2 md:flex relative">
+    <div className={cn(
+      className?className:"hidden w-1/2 md:flex relative"
+    )}>
       {/* Floating Download Button */}
       <button
         onClick={handlePrint}
-        className="absolute top-4 right-4 z-10 bg-white/70 hover:bg-white/90 
-                   backdrop-blur-md shadow-md p-3 rounded-full transition"
+        className={cn(
+          "top-4 right-4 z-10 bg-white/70 hover:bg-white/90 backdrop-blur-md shadow-md p-3 rounded-full transition ",
+          contentRef? "hidden": "absolute",
+          
+        )}
       >
         <Download className="w-5 h-5 text-gray-800" />
       </button>
 
       <div
-        className="w-full max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 border overflow-auto"
-        style={{ width: "100%", height: "auto" }}
+        className=" aspect-[1/1] w-full max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 border overflow-hidden" 
       >
         <div
-        ref={componentRef}
-        >
+        ref={contentRef?contentRef:componentRef}>
         {/* Header Section */}
         <div className="flex items-center gap-6 border-b pb-6">
           {photo && (
@@ -122,7 +131,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
             </div>
           )}
           <div>
-            <h1 className="text-3xl font-bold">
+            <h1 className="text-3xl  font-bold">
               {firstName} {lastName}
             </h1>
             <p className="text-lg text-gray-600">{jobTitle}</p>
@@ -184,7 +193,7 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
         )}
 
         {/* Skills */}
-        {skills && (
+        {skills && skills.length>0 && (
           <section className="mt-6">
             <h2 className="text-xl font-semibold mb-2">Skills</h2>
             <div className="flex flex-wrap gap-2">
@@ -204,5 +213,4 @@ export function ResumePreview({ resumeData }: ResumePreviewProps) {
       </div>
       </div>
     </div>
-  );
-}
+  );}

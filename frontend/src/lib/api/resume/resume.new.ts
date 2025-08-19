@@ -60,3 +60,32 @@ export const saveResume = async (values: ResumeValues, clerkId:string|null) => {
       throw error;
     }
   };
+
+  export const getAllResumes = async (clerkId: string) => {
+    if (!clerkId) {
+      throw new Error("User not authenticated");
+    }
+    try {
+      const response = await api.get(`/resume/user/${clerkId}`);
+      console.log("Fetched all resumes:", response.data);
+      return response.data;
+
+    } catch (error) {
+      console.error("Error fetching resumes:", error);
+      throw error;
+    }
+  };
+
+  export const deleteResume = async (clerkId:string,resumeId: string) => {
+    if (!resumeId) {
+      throw new Error("Resume ID is required");
+    }
+    try {
+      const response = await api.delete(`/resume/delete/${clerkId}/${resumeId}`);
+      console.log("Resume deleted successfully:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting resume:", error);
+      throw error;
+    }
+  };
