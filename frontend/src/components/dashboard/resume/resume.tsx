@@ -21,7 +21,7 @@ export default function ResumePage() {
         const data = await getAllResumes(clerkId);
         setResumes(data.resumes);
         setTotalResumes(data.totalResumes);
-        console.log("Fetched resumes:", data);
+        // console.log("Fetched resumes:", data);
       } catch (error) {
         console.error("Error fetching resumes:", error);
       }

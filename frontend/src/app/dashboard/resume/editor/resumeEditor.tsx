@@ -20,7 +20,7 @@ interface ResumeEditorProps {
 
 const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
   // console.log("resumetoEdit", resumetoEdit);
-  console.log(mapToResumeValues(resumetoEdit));
+  // console.log(mapToResumeValues(resumetoEdit));
 
   const searchParams = useSearchParams();
   
@@ -28,7 +28,7 @@ const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
   const [resumeData, setResumeData] = useState<ResumeValues>(() => {
     if (!resumetoEdit) return emptyResume;
     try {
-      console.log("mapValue",mapToResumeValues(resumetoEdit));
+      // console.log("mapValue",mapToResumeValues(resumetoEdit));
       return mapToResumeValues(resumetoEdit);
       
     } catch (error) {

@@ -6,7 +6,7 @@ const app = express();
 
 const clerkWebhookRouter = require("../routes/webhook/clerk/index.js");
 const resumeRouter = require("../routes/resume/index.js");
-
+const jobRouter = require("../routes/jobapplication/index.js");
 // Enable CORS
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -28,6 +28,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/webhook", clerkWebhookRouter);
 app.use("/api/resume", resumeRouter);
+app.use("/api/job", jobRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server!");

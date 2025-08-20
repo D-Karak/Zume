@@ -24,6 +24,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   resumes Resume[] // One-to-many relationship with Resume
+  jobApplication    JobApplication[]
 }
 
 model Resume {
@@ -54,7 +55,7 @@ model Resume {
   workExperiences WorkExperience[]
   educations      Education[]
   skills          String[]
-
+  jobApplications  JobApplication[]
   @@map("resumes")
 }
 
@@ -91,4 +92,21 @@ model Education {
   updatedAt DateTime @updatedAt
 
   @@map("educations")
+}
+
+
+//job track schema
+// prisma/schema.prisma
+model JobApplication {
+  id          String   @id @default(cuid())
+  jobTitle    String
+  company     String
+  position    String
+  applyDate   DateTime @default(now())
+  lastUpdate  DateTime @updatedAt
+  status      String   @default("applied") // applied | interview | offer | rejected
+  resumeId    String  
+  resume      Resume   @relation(fields: [resumeId], references: [id])
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }

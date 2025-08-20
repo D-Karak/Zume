@@ -1,8 +1,8 @@
 const { PrismaClient } = require('../../generated/prisma');
 const prisma = new PrismaClient();
-const path = require('path');
+
 const { del, put } = require("@vercel/blob");
-const { get } = require('http');
+
 
 const saveResume = async (req, res) => {
   const { clerkId, resumeId, photo, workExperiences, educations, ...resumeData } = req.body;

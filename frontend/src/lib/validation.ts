@@ -126,3 +126,15 @@ export const emptyResume: ResumeValues = {
 };
 
 
+//job application schema
+export const jobSchema = z.object({
+  jobTitle: z.string().trim().min(1, "Job title is required"),
+  company: z.string().trim().min(1, "Company is required"),
+  position: z.string().trim().min(1, "Position is required"),
+  applyDate: optionalString,
+  lastUpdate: optionalString,
+  status: z.enum(["applied", "interview", "offer", "rejected"]).default("applied").optional(),
+  resumeId: optionalString,
+})
+
+export type JobFormData = z.infer<typeof jobSchema>
