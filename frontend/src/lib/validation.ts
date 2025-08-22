@@ -138,3 +138,14 @@ export const jobSchema = z.object({
 })
 
 export type JobFormData = z.infer<typeof jobSchema>
+
+
+//Gen Ai
+
+export const genAiSchema = z.object({
+  jobTitle:optionalString,
+  ...workExperienceSchema.shape,
+  ...educationSchema.shape,
+  ...skillsSchema.shape,
+});
+export type GenAiValues = z.infer<typeof genAiSchema>;

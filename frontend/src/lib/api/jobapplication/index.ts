@@ -7,7 +7,7 @@ export const createJob = async (clerkId: string, jobData: JobFormData) =>{
   }
   try{
     const response= await api.post(`/job/${clerkId}`, jobData);
-  console.log("Job created:", response.data);
+  // console.log("Job created:", response.data);
   return response.data;
   }
   catch (error) {
@@ -23,7 +23,7 @@ export const getJobs = async (clerkId: string) =>{
   }
   try{
     const resopnse=await api.get(`/job/${clerkId}`);
-    console.log("Fetched jobs:", resopnse.data);
+    // console.log("Fetched jobs:", resopnse.data);
     return resopnse.data;
   }catch (error) {
     console.error("Error fetching jobs:", error);
@@ -38,7 +38,7 @@ export const updateJob = async (clerkId: string, jobId: string, jobData: JobForm
   }
   try {
     const response=await api.put(`/job/${clerkId}/${jobId}`, jobData);
-    console.log("Job updated:", response.data);
+    // console.log("Job updated:", response.data);
     return response.data;
   }catch (error) {
     console.error("Error updating job:", error);
@@ -53,7 +53,7 @@ export const deleteJob = async (clerkId: string, jobId: string) =>{
   }
   try{
     const response= await api.delete(`/job/${clerkId}/${jobId}`);
-    console.log("Job deleted:", response.data);
+    // console.log("Job deleted:", response.data);
     return response.data;
   }catch (error) {
     console.error("Error deleting job:", error);

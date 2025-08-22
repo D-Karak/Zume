@@ -1,9 +1,6 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import ResumeForm from "@/components/dashboard/resume/ResumeForm";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Breadcrumbs from "./breadCrumbs";
 import { steps } from "./step";
 import { useSearchParams } from "next/navigation";

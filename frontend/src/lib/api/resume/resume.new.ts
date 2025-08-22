@@ -36,15 +36,15 @@ export const saveResume = async (values: ResumeValues, clerkId:string|null) => {
     educations,
     ...resumeData
   });
-  console.log("resumeId",id)
-  console.log({workExperiences, educations, photo,...resumeData });
-    console.log("User ID:", clerkId);
+  // console.log("resumeId",id)
+  // console.log({workExperiences, educations, photo,...resumeData });
+    // console.log("User ID:", clerkId);
   
   return response.data;
   }
 
   export const resumeToEdit = async (resumeId: string, clerkId: string) => {
-    console.log(resumeId,clerkId)
+    // console.log(resumeId,clerkId)
     if (!clerkId) {
       throw new Error("User not authenticated");
     }
@@ -52,7 +52,7 @@ export const saveResume = async (values: ResumeValues, clerkId:string|null) => {
     try {
       if(resumeId && clerkId){
         const response = await api.get(`/resume/user/${clerkId}/${resumeId}`);
-        console.log("Fetched resume data:", response.data);
+        // console.log("Fetched resume data:", response.data);
       return response.data;
       }
     } catch (error) {
@@ -67,7 +67,7 @@ export const saveResume = async (values: ResumeValues, clerkId:string|null) => {
     }
     try {
       const response = await api.get(`/resume/user/${clerkId}`);
-      console.log("Fetched all resumes:", response.data);
+      // console.log("Fetched all resumes:", response.data);
       return response.data;
 
     } catch (error) {
@@ -82,7 +82,7 @@ export const saveResume = async (values: ResumeValues, clerkId:string|null) => {
     }
     try {
       const response = await api.delete(`/resume/delete/${clerkId}/${resumeId}`);
-      console.log("Resume deleted successfully:", response.data);
+      // console.log("Resume deleted successfully:", response.data);
       return response.data;
     } catch (error) {
       console.error("Error deleting resume:", error);

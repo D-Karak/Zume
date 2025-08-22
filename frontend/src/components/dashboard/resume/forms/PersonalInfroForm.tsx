@@ -7,12 +7,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { AIGenerateButton } from "@/components/ui/aiGenerateButton";
+import { genarateSummary } from "@/lib/genAi";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/type";
-import { personalInfoSchema, PersonalInfoValues } from "@/lib/validation";
+import { personalInfoSchema, PersonalInfoValues, ResumeValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function PersonalInfoForm({resumeData, setResumeData}: EditorFormProps) {
@@ -31,7 +33,7 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
       personalWebsite: resumeData.personalWebsite || "",
     },
   });
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
@@ -42,6 +44,28 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
   }, [form]);
 
   const photoInputRef = useRef<HTMLInputElement>(null);
+
+  //to gen summary with AI
+  async function handleGenerateSummary() {
+    setLoading(true);
+    try {
+      // Simulate AI generation logic
+      const generatedSummary = await genarateSummary({data: {
+        fistName: form.getValues("firstName"),
+        lastName: form.getValues("lastName"),
+        jobTitle: form.getValues("jobTitle"),
+        city: form.getValues("city"),
+        country: form.getValues("country"),
+        }});
+      form.setValue("summary", generatedSummary);
+      setResumeData({...resumeData, summary: generatedSummary });
+    } catch (error) {
+      console.error("Error generating summary:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -221,6 +245,11 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
               </FormItem>
             )}
           />
+            <AIGenerateButton
+             loading={loading}  
+             onClick={handleGenerateSummary} 
+             text={'Genarate the summary with AI'}
+             />
         </form>
       </Form>
     </div>

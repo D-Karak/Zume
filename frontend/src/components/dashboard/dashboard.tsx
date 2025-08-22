@@ -11,7 +11,6 @@ import { getJobs } from "@/lib/api/jobapplication"
 import { getAllResumes } from "@/lib/api/resume/resume.new"
 import { formatDistanceToNow } from "date-fns"
 import { toast } from "sonner"
-
 type Job = {
   id: string
   jobTitle: string
@@ -35,9 +34,11 @@ export default function Dashboard() {
   // Fetch jobs + resumes
   useEffect(() => {
     if (!clerkId) return
+  
     const run = async () => {
       try {
         setLoading(true)
+        const ai= "generate summary from gemini"// Call the AI function to demonstrate functionality
         const [jobsRes, resumesRes] = await Promise.all([
           getJobs(clerkId),
           getAllResumes(clerkId),
