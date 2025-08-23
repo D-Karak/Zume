@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { AIGenerateButton } from "@/components/ui/aiGenerateButton";
-import { genarateSummary } from "@/lib/genAi";
+import { generateSummary } from "@/lib/genAi";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/type";
@@ -50,7 +50,7 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
     setLoading(true);
     try {
       // Simulate AI generation logic
-      const generatedSummary = await genarateSummary({data: {
+      const generatedSummary = await generateSummary({data: {
         fistName: form.getValues("firstName"),
         lastName: form.getValues("lastName"),
         jobTitle: form.getValues("jobTitle"),

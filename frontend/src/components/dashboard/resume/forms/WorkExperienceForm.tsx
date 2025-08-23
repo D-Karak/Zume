@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { WorkExperienceValues, workExperienceSchema } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,8 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Plus, Trash2 } from 'lucide-react';
 import { useEffect } from 'react';
+import {AIGenerateButton}  from '@/components/ui/aiGenerateButton';
+import { generateWorkDescription } from '@/lib/genAi';
 
 const WorkExperienceForm = ({ resumeData, setResumeData }: EditorFormProps) => {
+  const [loading, setLoading] = useState(false);
   const form = useForm<WorkExperienceValues>({
     resolver: zodResolver(workExperienceSchema),
     defaultValues: {
@@ -50,6 +54,34 @@ const WorkExperienceForm = ({ resumeData, setResumeData }: EditorFormProps) => {
       currentExperiences.filter((_, i) => i !== index)
     );
   };
+  interface dataProp{
+    position?:string;
+    company?:string;
+    startDate?:string;
+    endDate?:string;
+    description?:string;
+  }
+
+  async function genAiDescription(data:dataProp,index:number) {
+    try{
+      setLoading(true);
+      const genaratedDescription = await generateWorkDescription({data:{
+       position: data.position ?? "",
+    company: data.company ?? "",
+    startDate: data.startDate ?? "",
+    endDate: data.endDate ?? "",
+    description: data.description ?? "",
+      }});
+      form.setValue(`workExperiences.${index}.description`,genaratedDescription);
+      setResumeData({...resumeData, workExperiences: form.getValues('workExperiences')});
+    }
+    catch(error){
+      console.log("Error generating work description:", error);
+    }
+    finally{
+      setLoading(false);
+  }
+}
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -144,6 +176,10 @@ const WorkExperienceForm = ({ resumeData, setResumeData }: EditorFormProps) => {
                   </FormItem>
                 )}
               />
+              <AIGenerateButton
+                loading={loading}
+                onClick={() => genAiDescription(form.getValues(`workExperiences.${index}`), index)}
+                text={'Generate Description with AI'} />
             </div>
           ))}
 
