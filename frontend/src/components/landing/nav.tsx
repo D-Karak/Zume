@@ -7,7 +7,7 @@ const Nav = () => {
 
   return (
     <header className="flex items-center justify-between px-6 py-4 lg:px-12 fixed top-0 w-full bg-white z-50 border-b-teal-300">
-        <div className="text-3xl font-bold text-teal-700">Zume</div>
+        <div className="text-3xl font-bold text-teal-700">Zume AI</div>
 
         <nav className="hidden md:flex items-center space-x-8">
           <Link href="/" className="text-teal-600 hover:text-teal-700/80 transition-colors">

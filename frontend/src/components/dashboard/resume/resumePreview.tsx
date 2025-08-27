@@ -108,7 +108,7 @@ export function ResumePreview({ resumeData,contentRef,className }: ResumePreview
       </button>
 
       <div
-        className=" aspect-[1/1] w-full max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 border overflow-hidden" 
+        className=" aspect-[1/1] w-full max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 border overflow-y-auto" 
       >
         <div
         ref={contentRef?contentRef:componentRef}>
