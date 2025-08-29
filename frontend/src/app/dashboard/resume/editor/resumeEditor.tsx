@@ -10,6 +10,7 @@ import { ResumePreview } from "@/components/dashboard/resume/resumePreview";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import { mapToResumeValues } from "@/lib/utils";
+import clsx from "clsx";
 
 interface ResumeEditorProps {
   resumetoEdit: any | null;
@@ -34,7 +35,8 @@ const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
     }
   });
   // console.log("resumetoEdit", resumeData);
-
+  //for preview mode
+  const [preview, setPreview] = useState(false);
   const { isSaving, hasUnsavedChanges } = useAutoSave(resumeData) ?? {
     isSaving: false,
     hasUnsavedChanges: false,
@@ -64,7 +66,9 @@ const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
       </header>
       <main className="relative grow">
         <div className="absolute bottom-0 top-0 flex w-full">
-          <div className="w-full overflow-y-auto p-3 md:w-1/2 space-y-6">
+          <div className={clsx(
+            preview? "hidden lg:block": "w-full overflow-y-auto p-3 md:w-1/2 space-y-6"
+          )}>
             <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
             {FormComponent && (
               <FormComponent
@@ -73,16 +77,19 @@ const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {
               />
             )}
           </div>
+
           <div className="grow md:border-r" />
 
           {/* Right side content, e.g., preview or additional info */}
-          <ResumePreview resumeData={resumeData} />
+          <ResumePreview resumeData={resumeData} preview={preview} />
         </div>
       </main>
       <Footer
         currentStep={currentStep}
         setCurrentStep={setStep}
         isSaving={isSaving}
+        preview={preview}
+        setPreview={setPreview}
       />
     </div>
   );

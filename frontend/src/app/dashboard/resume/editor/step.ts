@@ -4,7 +4,7 @@ import WorkExperienceForm from "@/components/dashboard/resume/forms/WorkExperien
 import EducationForm from "@/components/dashboard/resume/forms/EducationForm";
 import SkillsForm from "@/components/dashboard/resume/forms/SkillsForm";
 import { EditorFormProps } from "@/lib/type";
-
+import { ResumePreview } from "@/components/dashboard/resume/resumePreview";
 export const steps:{
     title: string;  
     component: React.ComponentType<EditorFormProps>;

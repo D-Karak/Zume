@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ResumeValues } from "@/lib/validation";
+import { University } from "lucide-react";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -54,7 +55,7 @@ export function mapToResumeValues(data: any): ResumeValues {
       : [],
     educations: Array.isArray(data?.educations)
       ? data.educations.map((edu: any) => ({
-          school: edu?.school || "",
+          university: edu?.university || "",
           degree: edu?.degree || "",
           fieldOfStudy: edu?.fieldOfStudy || "",
           startDate: formatDateForInput(edu?.startDate),

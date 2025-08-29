@@ -141,19 +141,6 @@ export default function ResumePage() {
               <p className="text-sm sm:text-base text-gray-500">
                 Create your first resume to get started on your job search journey
               </p>
-              <Button 
-                asChild 
-                size="lg"
-                className="bg-[#2F786F] hover:bg-[#245A53] text-white font-medium shadow-md transition-all duration-200 hover:scale-105 mt-4"
-              >
-                <Link
-                  href="/dashboard/resume/editor"
-                  className="flex items-center gap-2"
-                >
-                  <PlusSquare className="h-5 w-5" />
-                  Create Your First Resume
-                </Link>
-              </Button>
             </div>
           </div>
         )}
