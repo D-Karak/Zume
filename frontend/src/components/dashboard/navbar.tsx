@@ -37,9 +37,9 @@ export function Navbar({ isCollapsed, setIsCollapsed }: NavbarProps) {
           variant="ghost"
           size="icon"
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="hidden lg:flex"
+          className="flex lg:hidden"
         >
-          {isCollapsed ? <Menu className="h-5 w-5" /> : <X className="h-5 w-5" />}
+          {isCollapsed && <Menu className="h-5 w-5" />}
         </Button>
       </div>
 

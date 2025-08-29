@@ -207,7 +207,7 @@ export default function JobTrack() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card><CardContent className="p-6"><div className="text-2xl font-bold text-blue-600">{statusCounts.applied || 0}</div><p className="text-sm text-gray-600">Applied</p></CardContent></Card>
         <Card><CardContent className="p-6"><div className="text-2xl font-bold text-yellow-600">{statusCounts.interview || 0}</div><p className="text-sm text-gray-600">Interviews</p></CardContent></Card>
         <Card><CardContent className="p-6"><div className="text-2xl font-bold text-green-600">{statusCounts.offer || 0}</div><p className="text-sm text-gray-600">Offers</p></CardContent></Card>
