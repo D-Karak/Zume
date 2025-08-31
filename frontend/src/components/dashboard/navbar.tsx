@@ -12,15 +12,16 @@ import { Badge } from "@/components/ui/badge"
 import { Sun, Moon, Monitor, Bell, User, Settings, LogOut, Palette } from 'lucide-react'
 import { UserButton } from "@clerk/nextjs"
 import clsx from "clsx"
-
+import { useUser } from "@clerk/nextjs"
 interface NavbarProps {
   isCollapsed: boolean
   setIsCollapsed: (value: boolean) => void
 }
 
 export function Navbar({ isCollapsed, setIsCollapsed }: NavbarProps) {
+  const { user } = useUser();
   return (
-    <header className="h-16 border-b bg-card px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 backdrop-blur-sm bg-background/80">
+    <header className="h-16 border-b px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 backdrop-blur-sm bg-background/80">
       <div className="flex items-center gap-4">
         {/* Mobile menu toggle */}
         <Button
@@ -32,17 +33,9 @@ export function Navbar({ isCollapsed, setIsCollapsed }: NavbarProps) {
           <Menu className="h-5 w-5" />
         </Button>
         
-        {/* Desktop sidebar toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="flex lg:hidden"
-        >
-          {isCollapsed && <Menu className="h-5 w-5" />}
-        </Button>
+       
+      <div className="p-0 m-0 "><span className="text-[20px] font-bold sm:font-semibold text-[#245A53]">Hi, {user?.firstName}</span></div>
       </div>
-
       <div className="flex items-center gap-2 sm:gap-4">
         {/* Notifications */}
         <DropdownMenu>

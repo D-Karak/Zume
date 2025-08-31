@@ -191,12 +191,16 @@ const deleteResume = async (req, res) => {
       return res.status(400).json({ message: "Resume ID is required" });
     }
 
-    // Delete child records first (parallelized)
+    // Delete all child records first (including JobApplications)
     await Promise.all([
       prisma.workExperience.deleteMany({
         where: { resumeId },
       }),
       prisma.education.deleteMany({
+        where: { resumeId },
+      }),
+      // Add this to delete job applications that reference this resume
+      prisma.jobApplication.deleteMany({
         where: { resumeId },
       }),
     ]);
@@ -217,6 +221,4 @@ const deleteResume = async (req, res) => {
       .json({ message: "Server error", error: error.message });
   }
 };
-
-
 module.exports = { saveResume, getResumeById, getAllResume, deleteResume };

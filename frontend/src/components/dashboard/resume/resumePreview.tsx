@@ -99,10 +99,10 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
         <Download className="w-5 h-5" />
       </button>
 
-      <div className="w-full max-w-4xl mx-auto bg-white shadow-xl rounded-none print:shadow-none">
+      <div className="w-full max-w-4xl min-h-[100dvh] mx-auto bg-white shadow-xl rounded-none print:shadow-none">
         <div ref={contentRef ? contentRef : componentRef} className="print-container">
           {/* Header Section - Two Column Layout */}
-          <div className="header-section bg-gradient-to-r from-slate-800 to-slate-700 text-white p-8 print:p-12">
+          <div className="header-section bg-gradient-to-r from-slate-800 to-slate-700 text-white p-8 print:p-12 min-h-[70px]">
             <div className="flex items-start gap-6">
               {photo && (
                 <div className="relative w-32 h-32 overflow-hidden rounded-lg border-4 border-white/20 flex-shrink-0">

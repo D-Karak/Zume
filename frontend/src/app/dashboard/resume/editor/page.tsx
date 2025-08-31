@@ -13,7 +13,7 @@ interface PageProps {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-const  resumeId =  searchParams?.resumeId ?? '';
+const  resumeId =  await searchParams?.resumeId ?? '';
 const user = await currentUser(); // Clerk user ID (server-side)
 
 if (!user) {

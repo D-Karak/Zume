@@ -28,7 +28,25 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
   }, [form, setResumeData, resumeData]);
 
   const skills = form.watch("skills");
-  const skillCount = skills ? skills.split(",").filter(s => s.trim()).length : 0;
+  
+  // Helper function to convert skills to array
+  const getSkillsArray = (skills: string | string[] | undefined): string[] => {
+    if (!skills) return [];
+    if (Array.isArray(skills)) return skills.filter(s => s.trim());
+    if (typeof skills === 'string') return skills.split(",").filter(s => s.trim());
+    return [];
+  };
+
+  // Helper function to convert skills to string for textarea
+  const getSkillsString = (skills: string | string[] | undefined): string => {
+    if (!skills) return '';
+    if (Array.isArray(skills)) return skills.join(", ");
+    if (typeof skills === 'string') return skills;
+    return '';
+  };
+
+  const skillsArray = getSkillsArray(skills);
+  const skillCount = skillsArray.length;
 
   return (
     <FormProvider {...form}>
@@ -57,6 +75,10 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
             </div>
             <Textarea
               {...form.register("skills")}
+              value={getSkillsString(skills)}
+              onChange={(e) => {
+                form.setValue("skills", e.target.value);
+              }}
               placeholder="Enter your skills, separated by commas (e.g., JavaScript, React, Node.js, Python, AWS)"
               className="min-h-[120px] pl-10 pr-4 py-3 resize-none border-gray-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 rounded-lg transition-all duration-200 placeholder:text-gray-400"
               style={{
@@ -84,11 +106,11 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
           </div>
 
           {/* Preview of parsed skills */}
-          {skills && (
+          {skillsArray.length > 0 && (
             <div className="p-4 bg-gray-50/50 rounded-lg border border-gray-200/50">
               <p className="text-xs font-medium text-gray-600 mb-2">Preview</p>
               <div className="flex flex-wrap gap-2">
-                {skills.split(",").filter(s => s.trim()).map((skill, index) => (
+                {skillsArray.map((skill, index) => (
                   <span
                     key={index}
                     className="inline-flex items-center px-3 py-1 text-xs font-medium text-teal-700 bg-teal-100 rounded-full border border-teal-200"

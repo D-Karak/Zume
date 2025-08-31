@@ -38,9 +38,9 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       {/* Logo and Toggle */}
       <div className="p-6 border-b border-white/10 flex items-center justify-between">
         <h1 className={clsx(
-          "text-xl font-bold transition-all duration-300 overflow-hidden whitespace-nowrap"
+          "text-2xl font-bold transition-all duration-300 overflow-hidden whitespace-nowrap"
         )}>
-          Zume AI
+          <span className='text-3xl '>Z</span>ume AI
         </h1>
         
       </div>

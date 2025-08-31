@@ -451,14 +451,6 @@ export default function PersonalInfoForm({resumeData, setResumeData}: EditorForm
           </Form>
         </div>
       </Card>
-
-      {/* Progress Indicator */}
-      <div className="text-center">
-        <p className="text-xs text-gray-500 flex items-center justify-center gap-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          Auto-saving as you type
-        </p>
-      </div>
     </div>
   );
 }
