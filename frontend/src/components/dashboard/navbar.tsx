@@ -9,7 +9,8 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
-import { Sun, Moon, Monitor, Bell, User, Settings, LogOut, Palette } from 'lucide-react'
+import { Monitor, Bell, User, Settings, LogOut, Palette } from 'lucide-react'
+import ThemeToggleButton from "../ui/themeToggleButton"
 import { UserButton } from "@clerk/nextjs"
 import clsx from "clsx"
 import { useUser } from "@clerk/nextjs"
@@ -21,7 +22,7 @@ interface NavbarProps {
 export function Navbar({ isCollapsed, setIsCollapsed }: NavbarProps) {
   const { user } = useUser();
   return (
-    <header className="h-16 border-b px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 backdrop-blur-sm bg-background/80">
+    <header className="h-16 border-b bg-card px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 backdrop-blur-sm bg-background/80">
       <div className="flex items-center gap-4">
         {/* Mobile menu toggle */}
         <Button
@@ -34,36 +35,11 @@ export function Navbar({ isCollapsed, setIsCollapsed }: NavbarProps) {
         </Button>
         
        
-      <div className="p-0 m-0 "><span className="text-[20px] font-bold sm:font-semibold text-[#245A53]">Hi, {user?.firstName}</span></div>
+      <div className="p-0 m-0 "><span className="text-[20px] font-bold sm:font-semibold text-teal-900">Hi, {user?.firstName}</span></div>
       </div>
       <div className="flex items-center gap-2 sm:gap-4">
         {/* Notifications */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-4 w-4" />
-              <Badge className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-[10px] sm:text-xs">
-                3
-              </Badge>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-72 sm:w-80">
-            <div className="p-3 sm:p-4">
-              <h4 className="font-medium mb-2 text-sm sm:text-base">Notifications</h4>
-              <div className="space-y-2">
-                <div className="text-xs sm:text-sm p-2 bg-muted rounded">
-                  New job match found for Frontend Developer
-                </div>
-                <div className="text-xs sm:text-sm p-2 bg-muted rounded">
-                  Application status updated for Tech Corp
-                </div>
-                <div className="text-xs sm:text-sm p-2 bg-muted rounded">
-                  Resume viewed 5 times this week
-                </div>
-              </div>
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <ThemeToggleButton/>
 
         {/* Account Details */}
         <UserButton/>
