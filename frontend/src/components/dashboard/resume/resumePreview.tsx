@@ -33,6 +33,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
 
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
+     // @ts-ignore
     contentRef: componentRef,
     removeAfterPrint: true,
     documentTitle: `${title || "Resume"}`,
@@ -244,16 +245,17 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
                   Skills
                 </h2>
                 <div className="flex flex-wrap gap-2 pl-6">
-                  {(Array.isArray(skills) ? skills : skills.split(",")).map(
+                  
+                    {(Array.isArray(skills) ? skills : typeof skills === 'string' ? (skills as string).split(",") : []).map(
                     (skill: string, idx: number) => (
                       <span
-                        key={idx}
-                        className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium skill-badge hover:bg-slate-200 transition-colors"
+                      key={idx}
+                      className="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium skill-badge hover:bg-slate-200 transition-colors"
                       >
-                        {skill.trim()}
+                      {skill.trim()}
                       </span>
                     )
-                  )}
+                    )}
                 </div>
               </section>
             )}

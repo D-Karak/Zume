@@ -13,7 +13,7 @@ import { mapToResumeValues } from "@/lib/utils";
 import clsx from "clsx";
 
 interface ResumeEditorProps {
-  resumetoEdit: any | null;
+  resumetoEdit: ResumeValues | null;
 }
 
 const ResumeEditor = ({ resumetoEdit }: ResumeEditorProps) => {

@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ResumeValues } from "@/lib/validation";
-import { University } from "lucide-react";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
