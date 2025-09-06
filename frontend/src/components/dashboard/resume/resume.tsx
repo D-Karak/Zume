@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusSquare, FileText, Loader2, Sparkles } from "lucide-react";
+import { PlusSquare, FileText, Sparkles } from "lucide-react";
 import { getAllResumes } from "@/lib/api/resume/resume.new";
 import { useUser } from "@clerk/nextjs";
 import ResumeItem from "./ResumeItem";
@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 export default function ResumePage() {
   const { user, isLoaded } = useUser();
   const clerkId = isLoaded ? user?.id : null;
-
+  //ts-expect-ignore
   const [resumes, setResumes] = useState<any[]>([]);
   const [totalResumes, setTotalResumes] = useState(0);
   const [loading, setLoading] = useState(true);

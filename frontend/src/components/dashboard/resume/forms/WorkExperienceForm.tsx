@@ -309,7 +309,7 @@ const WorkExperienceForm = ({ resumeData, setResumeData }: EditorFormProps) => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[#2F786F] mt-0.5">•</span>
-              <span>Use numbers to quantify your achievements (e.g., "Increased sales by 25%")</span>
+              <span>Use numbers to quantify your achievements (e.g., &quot;Increased sales by 25%&quot;)</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[#2F786F] mt-0.5">•</span>

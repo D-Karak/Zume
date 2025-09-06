@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "./useDebounce";
 import { ResumeValues } from "@/lib/validation";
 import { useSearchParams } from "next/navigation";
@@ -70,7 +70,7 @@ useEffect(() => {
           );
         }
         toast.success("Resume saved successfully");
-      } catch (error: any) {
+      } catch (Error) {
         console.error("Failed to save resume:", error);
         setIsError(true);
         toast.error(error.response?.data?.error || "Failed to save resume");

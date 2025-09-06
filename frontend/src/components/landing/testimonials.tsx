@@ -75,7 +75,7 @@ export default function TestimonialsSection() {
           <div className="bg-white rounded-2xl p-8 lg:p-12 shadow-xl mx-4 lg:mx-16">
             <div className="text-center">
               <blockquote className="text-gray-700 text-lg leading-relaxed mb-6">
-                "{testimonials[currentTestimonial].text}"
+                &quot;{testimonials[currentTestimonial].text}&quot;
               </blockquote>
 
               <div className="flex items-center justify-center space-x-4">

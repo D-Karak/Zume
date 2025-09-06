@@ -15,8 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { EditorFormProps } from '@/lib/type';
 import { useUser } from '@clerk/nextjs';
-import { 
-  FileText, 
+import {  
   Sparkles, 
   Info,
   PenTool,
@@ -27,7 +26,6 @@ import { Card } from '@/components/ui/card';
 
 const GeneralInfoForm = ({ resumeData, setResumeData }: EditorFormProps) => {
   const { user } = useUser();
-  const clerkId = user?.id;
 
   const form = useForm<GenerateInfo>({
     resolver: zodResolver(generateInfoScema),
@@ -128,7 +126,7 @@ const GeneralInfoForm = ({ resumeData, setResumeData }: EditorFormProps) => {
                 <ul className='space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400'>
                   <li className='flex items-start gap-2'>
                     <span className='text-[#2F786F] mt-0.5'>•</span>
-                    <span>Use descriptive titles like "Marketing Manager - Tech Industry" for easy identification</span>
+                    <span>Use descriptive titles like &quot;Marketing Manager - Tech Industry&quot; for easy identification</span>
                   </li>
                   <li className='flex items-start gap-2'>
                     <span className='text-[#2F786F] mt-0.5'>•</span>

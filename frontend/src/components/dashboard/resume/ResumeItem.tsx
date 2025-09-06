@@ -25,7 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { Printer, Trash2, Clock, Edit, FileText } from "lucide-react";
 
 interface ResumeItemProps {
-  // @ts-ignore
+  // @ts-expect-ignore
   resume: any;
   onDeleted: (id: string) => void;
 }
@@ -36,7 +36,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const wasUpdated = resume.updatedAt !== resume.createdAt;
   const reactToPrintFn = useReactToPrint({
-     // @ts-ignore
+     // @ts-expect-ignore
     contentRef,
     documentTitle: resume.title || "Resume",
     pageStyle: `

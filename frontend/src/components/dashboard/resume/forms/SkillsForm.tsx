@@ -77,7 +77,7 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
               {...form.register("skills")}
               value={getSkillsString(skills)}
               onChange={(e) => {
-                 // @ts-ignore
+                 // @ts-expect-ignore
                 form.setValue("skills", e.target.value);
               }}
               placeholder="Enter your skills, separated by commas (e.g., JavaScript, React, Node.js, Python, AWS)"

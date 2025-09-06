@@ -109,7 +109,7 @@ const About = () => {
 
             <p className="text-lg text-gray-600 leading-relaxed">
               Create a job-winning resume in minutes with 200+ modern templates and AI-powered suggestions. Whether
-              you're a recent graduate or seasoned professional, our intuitive builder helps you stand out from the
+              you&apos;re a recent graduate or seasoned professional, our intuitive builder helps you stand out from the
               crowd. No design skills required - just add your info, customize, and download in multiple formats.
             </p>
           </div>

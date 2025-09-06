@@ -13,7 +13,7 @@ import { generateSummary } from "@/lib/genAi";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/type";
-import { personalInfoSchema, PersonalInfoValues, ResumeValues } from "@/lib/validation";
+import { personalInfoSchema, PersonalInfoValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";

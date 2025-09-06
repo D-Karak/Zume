@@ -23,7 +23,7 @@ function formatDateForInput(date?: string | Date | null) {
     return "";
   }
 }
-
+//ts-expect-ignore
 export function mapToResumeValues(data: any): ResumeValues {
   return {
     id: data?.id || undefined,
@@ -44,6 +44,7 @@ export function mapToResumeValues(data: any): ResumeValues {
       ? data.skills.join(", ")
       : (typeof data?.skills === 'string' ? data.skills : ""),
     workExperiences: Array.isArray(data?.workExperiences)
+    //ts-expect-ignore
       ? data.workExperiences.map((exp: any) => ({
           position: exp?.position || "",
           company: exp?.company || "",
@@ -53,6 +54,7 @@ export function mapToResumeValues(data: any): ResumeValues {
         }))
       : [],
     educations: Array.isArray(data?.educations)
+        //ts-expect-ignore
       ? data.educations.map((edu: any) => ({
           university: edu?.university || "",
           degree: edu?.degree || "",

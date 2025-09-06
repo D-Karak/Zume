@@ -1,18 +1,10 @@
 "use client"
-import { Menu, X } from "lucide-react"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "../ui/dropdown-menu"
+
 import { Badge } from "@/components/ui/badge"
-import { Monitor, Bell, User, Settings, LogOut, Palette } from 'lucide-react'
 import ThemeToggleButton from "../ui/themeToggleButton"
 import { UserButton } from "@clerk/nextjs"
-import clsx from "clsx"
 import { useUser } from "@clerk/nextjs"
 interface NavbarProps {
   isCollapsed: boolean
