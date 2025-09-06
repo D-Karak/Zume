@@ -7,14 +7,20 @@ export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-type PageProps = {
-  params: Promise<{ [key: string]: string | string[] | undefined }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+interface SearchParams {
+  resumeId?: string;
 }
 
-export default async function Page({ searchParams }: PageProps) {
+interface PageProps {
+  searchParams: Promise<SearchParams>;
+}
+
+export default async function Page({
+  searchParams,
+}: PageProps) {
+  // Await the searchParams since it's now a Promise
   const params = await searchParams;
-  const resumeId = typeof params?.resumeId === 'string' ? params.resumeId : '';
+  const resumeId = params?.resumeId ?? '';
   const user = await currentUser();
 
   if (!user) {
