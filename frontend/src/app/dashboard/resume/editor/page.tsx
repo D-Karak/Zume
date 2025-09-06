@@ -8,12 +8,20 @@ export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-interface PageProps {
-  searchParams: { resumeId?: string };
+interface SearchParams {
+  resumeId?: string;
 }
 
-export default async function Page({ searchParams }: PageProps) {
-const  resumeId =  await searchParams?.resumeId ?? '';
+interface PageProps {
+  searchParams: SearchParams;
+}
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+const resumeId = searchParams?.resumeId ?? '';
 const user = await currentUser(); // Clerk user ID (server-side)
 
 if (!user) {
