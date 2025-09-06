@@ -39,6 +39,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const reactToPrintFn = useReactToPrint({
     content: () => contentRef.current,
     documentTitle: resume.title || "Resume",
+     // @ts-expect-error
     pageStyle: `
     @page {
       size: A4;
