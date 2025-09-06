@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { useEffect, useState } from "react";
 import { useDebounce } from "./useDebounce";
 import { ResumeValues } from "@/lib/validation";
 import { useSearchParams } from "next/navigation";
