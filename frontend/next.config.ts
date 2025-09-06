@@ -8,12 +8,12 @@ const nextConfig: NextConfig = {
       hostname: "g5tnqosfnyx2sj1l.public.blob.vercel-storage.com"
     }]
   }
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  }
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // }
 };
 
 export default nextConfig;
