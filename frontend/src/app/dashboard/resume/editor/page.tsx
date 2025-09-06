@@ -2,20 +2,15 @@ import { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
 import { resumeToEdit } from "@/lib/api/resume/resume.new";
 import ResumeEditorWrapper from "./resumeEditorWrapper";
+import { PageProps } from "next/types";
 
 export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-type SearchParams = {
-  resumeId?: string;
-}
-
 export default async function Page({
   searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
+}: PageProps) {
   const resumeId = searchParams?.resumeId ?? '';
   const user = await currentUser();
 
