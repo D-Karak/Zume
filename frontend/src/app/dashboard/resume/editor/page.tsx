@@ -2,23 +2,26 @@ import { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
 import { resumeToEdit } from "@/lib/api/resume/resume.new";
 import ResumeEditorWrapper from "./resumeEditorWrapper";
-import { PageProps } from "next/types";
 
 export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-export default async function Page({
-  searchParams,
-}: PageProps) {
-  const resumeId = searchParams?.resumeId ?? '';
-  const user = await currentUser();
+type PageProps = {
+  searchParams: {
+    resumeId?: string | string[];
+  };
+};
 
-  if (!user) {
-    throw new Error('Unauthorized: Please sign in to continue.');
-  }
+export default async function Page({ searchParams }: PageProps) {
+const resumeId = typeof searchParams.resumeId === 'string' ? searchParams.resumeId : '';
+const user = await currentUser(); // Clerk user ID (server-side)
 
-  const serverData = await resumeToEdit(resumeId, user.id);
+if (!user) {
+  throw new Error('Unauthorized: Please sign in to continue.');
+}
+
+const serverData = await resumeToEdit(resumeId, user.id);
 
   return (
     <ResumeEditorWrapper
