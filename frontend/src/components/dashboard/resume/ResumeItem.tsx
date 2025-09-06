@@ -37,8 +37,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const wasUpdated = resume.updatedAt !== resume.createdAt;
   const reactToPrintFn = useReactToPrint({
-     // @ts-expect-ignore
-    contentRef,
+    content: () => contentRef.current,
     documentTitle: resume.title || "Resume",
     pageStyle: `
     @page {

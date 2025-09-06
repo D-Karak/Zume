@@ -34,7 +34,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
      // @ts-expect-ignore
-    contentRef: componentRef,
+    content: () => componentRef.current,
     removeAfterPrint: true,
     documentTitle: `${title || "Resume"}`,
     pageStyle: `
