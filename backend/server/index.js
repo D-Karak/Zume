@@ -7,9 +7,28 @@ const app = express();
 const clerkWebhookRouter = require("../routes/webhook/clerk/index.js");
 const resumeRouter = require("../routes/resume/index.js");
 const jobRouter = require("../routes/jobapplication/index.js");
-// Enable CORS
+// Enable CORS with a safe, dynamic origin check.
+// Allow: the configured FRONTEND_URL, localhost (dev), and any vercel.app subdomain (for previews).
+const normalize = (u) => (typeof u === 'string' ? u.replace(/\/$/, '') : u);
+const configuredFrontend = normalize(process.env.FRONTEND_URL);
+const allowedOrigins = [configuredFrontend, 'http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000'];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: (origin, callback) => {
+    // Allow non-browser requests (like curl or server-to-server)
+    if (!origin) return callback(null, true);
+
+    const cleanedOrigin = origin.replace(/\/$/, '');
+    // Allow explicit configured origin or common localhost dev ports
+    if (allowedOrigins.includes(cleanedOrigin)) return callback(null, true);
+
+    // Allow any Vercel subdomain (production and preview deployments)
+    if (cleanedOrigin.endsWith('.vercel.app')) return callback(null, true);
+
+    // Otherwise block and log for debugging
+    console.warn(`Blocked CORS request from origin: ${origin}`);
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 }));
 
