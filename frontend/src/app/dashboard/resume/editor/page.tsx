@@ -3,15 +3,18 @@ import { currentUser } from "@clerk/nextjs/server";
 import { resumeToEdit } from "@/lib/api/resume/resume.new";
 import ResumeEditorWrapper from "./resumeEditorWrapper";
 
+
 export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-export default async function Page(props: unknown) {
-  // Accept Next.js props as unknown and narrow them here to avoid
-  // conflicting with Next's generated PageProps type.
-  const { searchParams } = (props as { searchParams?: { resumeId?: string | string[] } }) || {};
-  const resumeId = typeof searchParams?.resumeId === 'string' ? searchParams.resumeId : '';
+interface PageProps {
+  searchParams: Promise<{ resumeId?: string }>;  // Add Promise wrapper
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;  // Await the Promise
+  const resumeId = params?.resumeId ?? '';
 const user = await currentUser(); // Clerk user ID (server-side)
 
 if (!user) {
