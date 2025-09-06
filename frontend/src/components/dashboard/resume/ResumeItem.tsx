@@ -39,7 +39,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const reactToPrintFn = useReactToPrint({
     content: () => contentRef.current,
     documentTitle: resume.title || "Resume",
-     // @ts-expect-error
+     // @ts-expect-error - react-to-print types don't match current API
     pageStyle: `
     @page {
       size: A4;

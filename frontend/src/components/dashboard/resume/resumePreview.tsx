@@ -36,7 +36,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
     content: () => componentRef.current,
     removeAfterPrint: true,
     documentTitle: `${title || "Resume"}`,
-    // @ts-expect-error
+    // @ts-expect-error - react-to-print types don't match current API
     pageStyle: `
     @page {
       size: A4;
