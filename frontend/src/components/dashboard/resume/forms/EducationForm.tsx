@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Plus, Trash2, GraduationCap, School, Calendar, Award, Sparkles, Info } from "lucide-react";
 import { useEffect } from "react";
 import { EditorFormProps } from "@/lib/type";
@@ -70,10 +69,10 @@ const EducationForm = ({ resumeData, setResumeData }: EditorFormProps) => {
     <div className="w-full max-w-2xl mx-auto space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-          Education
+          {"Education"}
         </h2>
         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-          Add your academic qualifications, starting with the most recent
+          {"Add your academic qualifications, starting with the most recent"}
         </p>
         <Badge 
           variant="secondary" 
@@ -281,7 +280,7 @@ const EducationForm = ({ resumeData, setResumeData }: EditorFormProps) => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[#2F786F] mt-0.5">•</span>
-              <span>Only include GPA if it's 3.5 or higher and you're a recent graduate</span>
+              <span>{"Only include GPA if it's 3.5 or higher and you're a recent graduate"}</span>
             </li>
           </ul>
         </div>

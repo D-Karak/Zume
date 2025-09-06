@@ -31,6 +31,7 @@ import {
 export function JobApply() {
   const { user, isLoaded } = useUser()
   const clerkId = isLoaded ? user?.id : null
+  // @ts-ignore
   const [resumes, setResumes] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)

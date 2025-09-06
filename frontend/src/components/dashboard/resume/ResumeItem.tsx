@@ -19,25 +19,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Badge } from "@/components/ui/badge";
 
-import { MoreVertical, Printer, Trash2, Clock, Edit, FileText } from "lucide-react";
+import { Printer, Trash2, Clock, Edit, FileText } from "lucide-react";
 
 interface ResumeItemProps {
+  // @ts-ignore
   resume: any;
   onDeleted: (id: string) => void;
 }
 
 export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isDeleting, startTransition] = useTransition();
+  
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const wasUpdated = resume.updatedAt !== resume.createdAt;
   const reactToPrintFn = useReactToPrint({
