@@ -3,32 +3,25 @@ import { currentUser } from "@clerk/nextjs/server";
 import { resumeToEdit } from "@/lib/api/resume/resume.new";
 import ResumeEditorWrapper from "./resumeEditorWrapper";
 
-
 export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-interface SearchParams {
-  resumeId?: string;
+type PageProps = {
+  params: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-interface PageProps {
-  searchParams: SearchParams;
-}
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const resumeId = typeof params?.resumeId === 'string' ? params.resumeId : '';
+  const user = await currentUser();
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-const resumeId = searchParams?.resumeId ?? '';
-const user = await currentUser(); // Clerk user ID (server-side)
+  if (!user) {
+    throw new Error('Unauthorized: Please sign in to continue.');
+  }
 
-if (!user) {
-  throw new Error('Unauthorized: Please sign in to continue.');
-}
-
-const serverData = await resumeToEdit(resumeId, user.id);
+  const serverData = await resumeToEdit(resumeId, user.id);
 
   return (
     <ResumeEditorWrapper
