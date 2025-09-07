@@ -9,7 +9,7 @@ const resumeRouter = require("../routes/resume/index.js");
 const jobRouter = require("../routes/jobapplication/index.js");
 // Enable CORS
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://zumeai-git-main-dibyendu-karaks-projects.vercel.app/',
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
 
