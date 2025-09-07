@@ -38,7 +38,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const wasUpdated = resume.updatedAt !== resume.createdAt;
   const reactToPrintFn = useReactToPrint({
     // @ts-expect-error - react-to-print types don't match current API
-    contentRef: componentRef,
+    contentRef: contentRef,
     removeAfterPrint: true,
     documentTitle: `${resume.title || "Resume"}`,
     pageStyle: `
