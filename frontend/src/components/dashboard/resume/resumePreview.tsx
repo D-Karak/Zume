@@ -145,16 +145,16 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
                 </div>
               )}
               <div className="flex-1">
-                <h1 className="text-[min(4vw,2rem)] font-bold tracking-tight mb-[2%]">
+                <h1 className="text-[length:clamp(16px,3.2%,32px)] font-bold tracking-tight mb-[2%]">
                   {firstName} {lastName}
                 </h1>
-                <p className="text-[min(3vw,1.25rem)] text-slate-200 mb-[3%]">{jobTitle}</p>
+                <p className="text-[length:clamp(14px,2.5%,20px)] text-slate-200 mb-[3%]">{jobTitle}</p>
                 
                 {/* Contact Info Grid */}
-                <div className="grid grid-cols-2 gap-[2%] text-[min(2vw,0.875rem)]">
+                <div className="grid grid-cols-2 gap-[2%] text-[length:clamp(10px,1.8%,14px)]">
                   {(city || country) && (
                     <div className="flex items-center gap-[2%] text-slate-300">
-                      <MapPin className="w-[min(2vw,1rem)] h-[min(2vw,1rem)] flex-shrink-0" />
+                      <MapPin className="w-[length:clamp(12px,1.8%,16px)] h-[length:clamp(12px,1.8%,16px)] flex-shrink-0" />
                       <span className="truncate">{city}{city && country && ", "}{country}</span>
                     </div>
                   )}
@@ -187,23 +187,24 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             </div>
           </div>
 
+          {/* Update the content section styles */}
           <div className="p-[3%] space-y-[3%]">
             {/* Professional Summary */}
             {summary && (
               <section>
-                <h2 className="text-[min(3vw,1.5rem)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
-                  <div className="w-1 h-[min(3vw,1.5rem)] bg-teal-600 rounded-full" />
+                <h2 className="text-[length:clamp(14px,2.8%,24px)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
+                  <div className="w-1 h-[length:clamp(14px,2.8%,24px)] bg-teal-600 rounded-full" />
                   Professional Summary
                 </h2>
-                <p className="text-[min(1.8vw,0.875rem)] text-gray-700 leading-relaxed pl-[3%]">{summary}</p>
+                <p className="text-[length:clamp(10px,1.8%,14px)] text-gray-700 leading-relaxed pl-[3%]">{summary}</p>
               </section>
             )}
 
             {/* Work Experience */}
             {workExperiences && workExperiences.length > 0 && (
               <section>
-                <h2 className="text-[min(3vw,1.5rem)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
-                  <div className="w-1 h-[min(3vw,1.5rem)] bg-teal-600 rounded-full" />
+                <h2 className="text-[length:clamp(14px,2.8%,24px)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
+                  <div className="w-1 h-[length:clamp(14px,2.8%,24px)] bg-teal-600 rounded-full" />
                   Work Experience
                 </h2>
                 <div className="space-y-[3%] pl-[3%]">
@@ -211,16 +212,16 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
                     <div key={idx} className="relative">
                       <div className="flex justify-between items-start mb-[2%]">
                         <div>
-                          <h3 className="text-[min(2.2vw,1.125rem)] font-semibold text-slate-800">
+                          <h3 className="text-[length:clamp(12px,2.2%,18px)] font-semibold text-slate-800">
                             {work.position}
                           </h3>
-                          <p className="text-[min(1.8vw,0.875rem)] text-teal-600 font-medium">{work.company}</p>
+                          <p className="text-[length:clamp(10px,1.8%,14px)] text-teal-600 font-medium">{work.company}</p>
                         </div>
-                        <span className="text-[min(1.6vw,0.75rem)] text-gray-500 italic whitespace-nowrap">
+                        <span className="text-[length:clamp(9px,1.6%,12px)] text-gray-500 italic whitespace-nowrap">
                           {work.startDate} - {work.endDate}
                         </span>
                       </div>
-                      <p className="text-[min(1.8vw,0.875rem)] text-gray-700 leading-relaxed">{work.description}</p>
+                      <p className="text-[length:clamp(10px,1.8%,14px)] text-gray-700 leading-relaxed">{work.description}</p>
                       {idx < workExperiences.length - 1 && (
                         <div className="mt-[3%] border-b border-gray-200 section-divider" />
                       )}
