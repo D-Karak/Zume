@@ -32,7 +32,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
   return (
     <div className={clsx(
-      "bg-gradient-to-b from-[#2F786F] to-[#245A53] text-white flex flex-col transition-all duration-300 ease-in-out shadow-xl h-full",
+      "bg-gradient-to-b from-[#2F786F] to-[#245A53] text-white flex flex-col transition-all duration-300 ease-in-out shadow-xl h-full dark:bg-gradient-to-b dark:from-card dark:to-card",
       isCollapsed ? "w-0" : "w-64"
     )}>
       {/* Logo and Toggle */}

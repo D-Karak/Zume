@@ -1,8 +1,6 @@
 "use client"
 import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-import { Badge } from "@/components/ui/badge"
 import ThemeToggleButton from "../ui/themeToggleButton"
 import { UserButton } from "@clerk/nextjs"
 import { useUser } from "@clerk/nextjs"
@@ -27,7 +25,7 @@ export function Navbar({ isCollapsed, setIsCollapsed }: NavbarProps) {
         </Button>
         
        
-      <div className="p-0 m-0 "><span className="text-[20px] font-bold sm:font-semibold text-teal-900">Hi, {user?.firstName}</span></div>
+      <div className="p-0 m-0 "><span className="text-[20px] font-bold sm:font-semibold text-teal-900 dark:text-foreground">Hi, {user?.firstName}</span></div>
       </div>
       <div className="flex items-center gap-2 sm:gap-4">
         {/* Notifications */}
