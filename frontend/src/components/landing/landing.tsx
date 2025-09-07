@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import Nav from './nav'
 import Hero from './hero'
 import About from './about'
@@ -8,7 +8,16 @@ import Info from './info'
 import PricingSection from './pricing-section'
 import TestimonialsSection from './testimonials'
 import FooterSection from './footer'
+import { useTheme } from 'next-themes'
+
 const Landing = () => {
+  const { theme, setTheme } = useTheme()
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined' && theme === 'dark') {
+      setTheme('system')
+    }
+  }, [theme, setTheme])
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-300 to-cyan-300">
       <Nav/>

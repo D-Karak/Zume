@@ -48,23 +48,25 @@ export default function PricingSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <Card
-              key={index}
-              className={`relative ${plan.popular ? "border-teal-500 shadow-lg scale-105" : "border-gray-200"} transition-all hover:shadow-lg`}
-            >
+  key={index}
+  className={`relative bg-white text-gray-900 ${plan.popular ? "border-teal-500 shadow-lg scale-105" : "border-gray-200"} transition-all hover:shadow-lg`}
+>
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-teal-500 text-white px-4 py-1">Popular</Badge>
+                  <Badge className="bg-teal-500 text-white px-4 py-1 border-none">
+  Popular
+</Badge>
                 </div>
               )}
 
               <CardHeader className="text-center pb-4">
                 <div className="mb-2">
-                  <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">{plan.name}</span>
+<span className="text-sm font-medium text-gray-500 uppercase tracking-wide">{plan.name}</span>
                 </div>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
+<span className="text-4xl font-bold text-gray-900">{plan.price}</span>
                 </div>
-                <p className="text-sm text-gray-600 px-2">{plan.description}</p>
+<p className="text-sm text-gray-600 px-2">{plan.description}</p>
               </CardHeader>
 
               <CardContent className="pt-0">
@@ -72,16 +74,16 @@ export default function PricingSection() {
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                      <Check className="w-4 h-4 text-teal-500 mr-3 flex-shrink-0" />
-                      {feature}
-                    </li>
+  <Check className="w-4 h-4 text-teal-500 mr-3 flex-shrink-0" />
+  {feature}
+</li>
                   ))}
                 </ul>
 
                 {/* CTA Button */}
                 <Button
                   variant={plan.buttonVariant}
-                  className={`w-full ${plan.popular ? "bg-teal-500 hover:bg-teal-600 text-white" : ""}`}
+                  className={`w-full ${plan.popular ? "bg-teal-500 hover:bg-teal-600 text-white" : "dark:border-accent/10 hover:dark:bg-accent/10 hover:dark:text-black"}`}
                 >
                   {plan.buttonText}
                 </Button>
