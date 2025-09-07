@@ -62,8 +62,6 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
         border: none !important;
         margin: 0 auto !important;
         padding: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
         max-width: 210mm !important; /* A4 width */
         overflow: hidden !important;
         position: relative !important;
