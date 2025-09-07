@@ -55,7 +55,7 @@ export default function ResumePage() {
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       {/* Header Section with Gradient Background */}
-      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#2F786F] via-[#3A8B82] to-[#245A53] p-6 sm:p-8 text-white">
+      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#2F786F] via-[#3A8B82] to-[#245A53] p-6 sm:p-8 text-white dark:bg-gradient-to-br dark:from-card dark:via-card dark:to-card">
         <div className="relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
@@ -83,7 +83,7 @@ export default function ResumePage() {
             <Button 
               asChild 
               size="lg"
-              className="bg-white text-[#2F786F] hover:bg-white/90 font-semibold shadow-lg transition-all duration-200 hover:scale-105 w-full sm:w-auto"
+              className="dark:text-card bg-white text-[#2F786F] hover:bg-white/90 font-semibold shadow-lg transition-all duration-200 hover:scale-105 w-full sm:w-auto"
             >
               <Link
                 href="/dashboard/resume/editor"
@@ -149,7 +149,7 @@ export default function ResumePage() {
 
       {/* Tips Section */}
       {resumes.length > 0 && (
-        <div className="mt-8 p-4 sm:p-6 bg-gradient-to-r from-[#2F786F]/10 to-[#245A53]/10 rounded-lg sm:rounded-xl border border-[#2F786F]/20">
+        <div className="dark:bg-gradient-to-r from-card to-card dark:border-accent  mt-8 p-4 sm:p-6 bg-gradient-to-r from-[#2F786F]/10 to-[#245A53]/10 rounded-lg sm:rounded-xl border border-[#2F786F]/20">
           <h3 className="text-base sm:text-lg font-semibold mb-2 text-[#2F786F]">
             💡 Pro Tips
           </h3>

@@ -94,7 +94,7 @@ export function JobApply() {
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
       {/* Header Section */}
-      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#2F786F] via-[#3A8B82] to-[#245A53] p-6 sm:p-8 text-white">
+      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#2F786F] via-[#3A8B82] to-[#245A53] p-6 sm:p-8 text-white dark:from-card dark:via-card dark:to-card">
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-3 bg-white/20 rounded-lg backdrop-blur-sm">
@@ -312,7 +312,7 @@ export function JobApply() {
               <Button 
                 type="submit" 
                 disabled={submitting || resumes.length === 0}
-                className="w-full h-12 bg-[#2F786F] hover:bg-[#245A53] text-white font-medium text-base shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-12 bg-[#2F786F] hover:bg-[#245A53] text-white font-medium text-base shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed dark:bg-accent dark:hover:bg-accent"
               >
                 {submitting ? (
                   <>
@@ -341,7 +341,7 @@ export function JobApply() {
       </Card>
 
       {/* Tips Section */}
-      <Card className="border-0 shadow-md bg-gradient-to-r from-[#2F786F]/5 to-[#245A53]/5">
+      <Card className="border-0 shadow-md bg-gradient-to-r from-[#2F786F]/5 to-[#245A53]/5  dark:from-card to-card dark:border-accent">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold mb-3 text-[#2F786F]">
             💡 Application Tips
