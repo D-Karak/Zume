@@ -102,7 +102,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
                   <ResumePreview
                     resumeData={mapToResumeValues(resume)}
                     contentRef={contentRef}
-                    className="shadow-none"
+                    className="shadow-none print-container"
                   />
                 </div>
               </div>
