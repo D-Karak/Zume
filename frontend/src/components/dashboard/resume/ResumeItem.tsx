@@ -37,56 +37,55 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const wasUpdated = resume.updatedAt !== resume.createdAt;
   const reactToPrintFn = useReactToPrint({
-    content: () => contentRef.current,
-    documentTitle: resume.title || "Resume",
-     // @ts-expect-error - react-to-print types don't match current API
+    // @ts-expect-error - react-to-print types don't match current API
+    contentRef: componentRef,
+    removeAfterPrint: true,
+    documentTitle: `${resume.title || "Resume"}`,
     pageStyle: `
-    @page {
-      size: A4;
-      margin: 20mm;
-    }
-
-    @media print {
-      body {
+      @page {
+        size: A4;
         margin: 0;
-        padding: 0;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
       }
 
-      button, .no-print, .print:hidden {
-        display: none !important;
-      }
+      @media print {
+        html, body {
+          margin: 0;
+          padding: 0;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
 
-      .print-container {
-        box-shadow: none !important;
-        border: none !important;
-        border-radius: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-        transform: none !important;
-      }
+        button, .no-print {
+          display: none !important;
+        }
 
-      h1, h2, h3, h4, h5, h6 {
-        color: #111 !important;
-        font-family: "Helvetica Neue", Arial, sans-serif;
-      }
+        .print-container {
+          box-shadow: none !important;
+          border: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 210mm !important;
+          min-height: 297mm !important;
+        }
 
-      p, span, li {
-        color: #222 !important;
-        font-family: "Georgia", serif;
-        line-height: 1.5;
-      }
+        p, span, li {
+          color: #222 !important;
+        }
 
-      .skill-badge {
-        background-color: #e5e7eb !important;
-        color: #111 !important;
-        -webkit-print-color-adjust: exact;
+        .skill-badge {
+          background-color: #f3f4f6 !important;
+          color: #111 !important;
+        }
+
+        .section-divider {
+          border-color: #e5e7eb !important;
+        }
+        
+        .header-section span,.header-section p {
+          color: #fff !important;
+        }
       }
-    }
-  `
+    `,
   });
 
  
