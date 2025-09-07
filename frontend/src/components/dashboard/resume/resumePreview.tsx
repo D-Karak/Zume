@@ -120,10 +120,11 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
         <Download className="w-5 h-5" />
       </button>
 
-      <div className="flex justify-center items-start min-h-screen py-4">
-        <div className="w-[95%] max-w-3xl mx-auto">
-          <div className="relative bg-white shadow-xl rounded-none print:shadow-none aspect-[1/1.4142]">
-            <div ref={contentRef ? contentRef : componentRef} className="print-container absolute inset-0">
+      {/* Replace the existing container divs with these new ones */}
+      <div className="flex justify-center items-start w-full py-4">
+        <div className="w-[95%] max-w-3xl">
+          <div className="relative bg-white shadow-xl rounded-none print:shadow-none aspect-[1/1.4142] h-fit">
+            <div ref={contentRef ? contentRef : componentRef} className="print-container absolute inset-0 h-full">
           {/* Header Section - Two Column Layout */}
           <div className="header-section bg-gradient-to-r from-slate-800 to-slate-700 text-white p-[3%] min-h-[70px]">
             <div className="flex items-start gap-[3%]">
