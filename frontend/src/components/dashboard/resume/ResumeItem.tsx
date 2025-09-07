@@ -96,7 +96,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
         <Link href={`/dashboard/resume/editor?resumeId=${resume.id}`}>
           <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             {/* Resume Preview Container */}
-            <div className="relative h-[280px] overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+            <div className="relative h-[280px] overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 hidden lg:block">
               <div className="absolute inset-0 p-4 hover:blur-2xl">
                 <div className="transform scale-[0.35] sm:scale-[0.4] origin-top-left w-[285%] sm:w-[250%]">
                   <ResumePreview
