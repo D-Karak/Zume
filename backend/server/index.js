@@ -8,10 +8,7 @@ const clerkWebhookRouter = require("../routes/webhook/clerk/index.js");
 const resumeRouter = require("../routes/resume/index.js");
 const jobRouter = require("../routes/jobapplication/index.js");
 // Enable CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-}));
+app.use(cors());
 
 // Middleware
 app.use(express.json({ limit: "10mb" }));
