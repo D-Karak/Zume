@@ -33,10 +33,10 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
 
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    // @ts-expect-error - react-to-print types don't match current API
+    contentRef:  componentRef,
     removeAfterPrint: true,
     documentTitle: `${title || "Resume"}`,
-    // @ts-expect-error - react-to-print types don't match current API
     pageStyle: `
     @page {
       size: A4;
