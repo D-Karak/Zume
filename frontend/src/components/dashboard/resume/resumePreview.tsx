@@ -145,13 +145,13 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
                 </div>
               )}
               <div className="flex-1">
-                <h1 className="text-[length:clamp(16px,3.2%,32px)] font-bold tracking-tight mb-[2%]">
+                <h1 className="text-2xl md:text-3xl print:text-2xl font-bold tracking-tight mb-[2%]">
                   {firstName} {lastName}
                 </h1>
-                <p className="text-[length:clamp(14px,2.5%,20px)] text-slate-200 mb-[3%]">{jobTitle}</p>
+                <p className="text-lg md:text-xl print:text-lg text-slate-200 mb-[3%]">{jobTitle}</p>
                 
                 {/* Contact Info Grid */}
-                <div className="grid grid-cols-2 gap-[2%] text-[length:clamp(10px,1.8%,14px)]">
+                <div className="grid grid-cols-2 gap-[2%] text-sm print:text-sm">
                   {(city || country) && (
                     <div className="flex items-center gap-[2%] text-slate-300">
                       <MapPin className="w-[length:clamp(12px,1.8%,16px)] h-[length:clamp(12px,1.8%,16px)] flex-shrink-0" />
@@ -203,25 +203,25 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             {/* Work Experience */}
             {workExperiences && workExperiences.length > 0 && (
               <section>
-                <h2 className="text-[length:clamp(14px,2.8%,24px)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
-                  <div className="w-1 h-[length:clamp(14px,2.8%,24px)] bg-teal-600 rounded-full" />
+                <h2 className="text-xl md:text-2xl print:text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-6 md:h-7 print:h-6 bg-teal-600 rounded-full" />
                   Work Experience
                 </h2>
-                <div className="space-y-[3%] pl-[3%]">
+                <div className="space-y-4 pl-6">
                   {workExperiences.map((work, idx) => (
                     <div key={idx} className="relative">
-                      <div className="flex justify-between items-start mb-[2%]">
+                      <div className="flex justify-between items-start mb-2">
                         <div>
-                          <h3 className="text-[length:clamp(12px,2.2%,18px)] font-semibold text-slate-800">
+                          <h3 className="text-base md:text-lg print:text-base font-semibold text-slate-800">
                             {work.position}
                           </h3>
-                          <p className="text-[length:clamp(10px,1.8%,14px)] text-teal-600 font-medium">{work.company}</p>
+                          <p className="text-sm md:text-base print:text-sm text-teal-600 font-medium">{work.company}</p>
                         </div>
-                        <span className="text-[length:clamp(9px,1.6%,12px)] text-gray-500 italic whitespace-nowrap">
+                        <span className="text-xs md:text-sm print:text-xs text-gray-500 italic whitespace-nowrap">
                           {work.startDate} - {work.endDate}
                         </span>
                       </div>
-                      <p className="text-[length:clamp(10px,1.8%,14px)] text-gray-700 leading-relaxed">{work.description}</p>
+                      <p className="text-sm md:text-base print:text-sm text-gray-700 leading-relaxed">{work.description}</p>
                       {idx < workExperiences.length - 1 && (
                         <div className="mt-[3%] border-b border-gray-200 section-divider" />
                       )}
@@ -234,21 +234,21 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             {/* Education */}
             {educations && educations.length > 0 && (
               <section>
-                <h2 className="text-[length:clamp(14px,2.8%,24px)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
-                  <div className="w-1 h-[length:clamp(14px,2.8%,24px)] bg-teal-600 rounded-full" />
+                <h2 className="text-xl md:text-2xl print:text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-6 md:h-7 print:h-6 bg-teal-600 rounded-full" />
                   Education
                 </h2>
-                <div className="space-y-[3%] pl-[3%]">
+                <div className="space-y-4 pl-6">
                   {educations.map((edu, idx) => (
                     <div key={idx} className="relative">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h3 className="text-[min(2.2vw,1.125rem)] font-semibold text-slate-800">
+                          <h3 className="text-base md:text-lg print:text-base font-semibold text-slate-800">
                             {edu.degree}
                           </h3>
-                          <p className="text-[min(1.8vw,0.875rem)] text-teal-600 font-medium">{edu.university}</p>
+                          <p className="text-sm md:text-base print:text-sm text-teal-600 font-medium">{edu.university}</p>
                         </div>
-                        <span className="text-[min(1.6vw,0.75rem)] text-gray-500 italic whitespace-nowrap">
+                        <span className="text-xs md:text-sm print:text-xs text-gray-500 italic whitespace-nowrap">
                           {edu.startDate} - {edu.endDate}
                         </span>
                       </div>
@@ -264,17 +264,17 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             {/* Skills */}
             {skills && skills.length > 0 && (
               <section>
-                <h2 className="text-[min(3vw,1.5rem)] font-bold text-slate-800 mb-[2%] flex items-center gap-[2%]">
-                  <div className="w-1 h-[min(3vw,1.5rem)] bg-teal-600 rounded-full" />
+                <h2 className="text-xl md:text-2xl print:text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                  <div className="w-1 h-6 md:h-7 print:h-6 bg-teal-600 rounded-full" />
                   Skills
                 </h2>
-                <div className="flex flex-wrap gap-[2%] pl-[3%]">
+                <div className="flex flex-wrap gap-2 pl-6">
                   
                     {(Array.isArray(skills) ? skills : typeof skills === 'string' ? (skills as string).split(",") : []).map(
                     (skill: string, idx: number) => (
                       <span
                       key={idx}
-                      className="px-[2%] py-[1%] bg-slate-100 text-slate-700 rounded-lg text-[min(1.8vw,0.875rem)] font-medium skill-badge hover:bg-slate-200 transition-colors"
+                      className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm md:text-base print:text-sm font-medium skill-badge hover:bg-slate-200 transition-colors"
                       >
                       {skill.trim()}
                       </span>
