@@ -36,7 +36,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
     // @ts-expect-error - react-to-print types don't match current API
     contentRef:componentRef,
     removeAfterPrint: true,
-    documentTitle: `${title || "Resume"}`,
+    documentTitle: `${title}`||` ${firstName} ${lastName} - Resume`,
     pageStyle: `
     @page {
       size: A4;
@@ -44,13 +44,21 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
     }
 
     @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      
       html, body {
-        margin: 0;
-        padding: 0;
-        width: 210mm; /* A4 width */
-        height: 297mm; /* A4 height */
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+        overflow: hidden !important;
+      }
+
+      body > *:not(.print-container) {
+        display: none !important;
       }
 
       button, .no-print {
