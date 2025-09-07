@@ -40,13 +40,15 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
     pageStyle: `
     @page {
       size: A4;
-      margin: 0;
+      margin: 0.5cm;
     }
 
     @media print {
-      body {
+      html, body {
         margin: 0;
         padding: 0;
+        width: 210mm; /* A4 width */
+        height: 297mm; /* A4 height */
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
@@ -58,12 +60,15 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       .print-container {
         box-shadow: none !important;
         border: none !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
         width: 100% !important;
-        min-height: 100vh !important;
+        height: 100% !important;
+        max-width: 210mm !important; /* A4 width */
+        overflow: hidden !important;
+        position: relative !important;
+        page-break-after: always;
       }
-
-     
 
       p, span, li {
         color: #222 !important;
@@ -72,14 +77,23 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       .skill-badge {
         background-color: #f3f4f6 !important;
         color: #111 !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
       }
 
       .section-divider {
         border-color: #e5e7eb !important;
-  }
-        .header-section span,.header-section p{
-          color: #fff !important
-        }
+      }
+
+      .header-section {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .header-section span,
+      .header-section p {
+        color: #fff !important;
+      }
     }
   `,
   });
@@ -100,8 +114,8 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
         <Download className="w-5 h-5" />
       </button>
 
-      <div className="w-full max-w-4xl min-h-[100dvh] mx-auto bg-white shadow-xl rounded-none print:shadow-none">
-        <div ref={contentRef ? contentRef : componentRef} className="print-container">
+      <div className="w-full max-w-[210mm] mx-auto bg-white shadow-xl rounded-none print:shadow-none">
+        <div ref={contentRef ? contentRef : componentRef} className="print-container w-full h-full">
           {/* Header Section - Two Column Layout */}
           <div className="header-section bg-gradient-to-r from-slate-800 to-slate-700 text-white p-8 print:p-12 min-h-[70px]">
             <div className="flex items-start gap-6">
