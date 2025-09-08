@@ -279,7 +279,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
         <Download className="w-5 h-5" />
       </button>
       {/* Header Section */}
-     <div className="w-full min-h-[70px] max-h-[25%] bg-gray-800 text-white p-7 sm:p-4 flex gap-5 sm:gap-4 justify-center items-center">
+     <div className="w-full min-h-[70px] max-h-[25%] bg-gray-800 text-white p-6 flex gap-5 sm:gap-4 justify-center items-center">
   {/* Profile Image */}
   {photo && (
     <div className="rounded-2xl border-[.3vw] border-white/20 w-[clamp(30px,100px,130px)] h-[clamp(30px,100px,130px)] overflow-hidden flex-shrink-0">
@@ -357,9 +357,9 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
         {/* Work Experience */}
         {workExperiences?.length > 0 && (
           <section>
-            <h2 className="text-resume-lg text-slate-800 mb-2">Work Experience</h2>
+            <h2 className="text-resume-lg text-slate-800 mb-1">Work Experience</h2>
             {workExperiences.map((work, idx) => (
-              <div key={idx} className="mb-4">
+              <div key={idx} className="mb-3">
                 <h3 className="text-resume-base font-semibold">{work.position}</h3>
                 <p className="text-resume-sm text-teal-600">{work.company}</p>
                 <span className="text-resume-xs italic text-gray-500">{work.startDate} - {work.endDate}</span>

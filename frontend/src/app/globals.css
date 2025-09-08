@@ -164,7 +164,7 @@ html{
      ============================= */
 
   .text-resume-xl {
-    font-size: clamp(25px, 1.8vw, 30px);
+    font-size: clamp(21px, 1.8vw, 30px);
     line-height: 1.2;
     font-weight: 700;
   }
