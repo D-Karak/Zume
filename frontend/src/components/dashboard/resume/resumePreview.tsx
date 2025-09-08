@@ -267,7 +267,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       "w-1/2 overflow-y-auto hidden md:block",
       preview?"w-full block": "hidden"
     )}>
-      <div className="w-full grow">
+      <div className="w-full grow bg-white">
       {/* Header Section */}
      <div className="w-full min-h-[70px] max-h-[25%] bg-gray-800 text-white p-7 sm:p-4 flex gap-5 sm:gap-4 justify-center items-center">
   {/* Profile Image */}
