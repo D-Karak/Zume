@@ -196,11 +196,11 @@ html{
   /* =============================
      Print Overrides (A4 Consistency)
      ============================= */
-  @media print {
-    .resume-xl { font-size: 18pt !important; }
-    .resume-lg { font-size: 14pt !important; }
-    .resume-base { font-size: 12pt !important; }
-    .resume-sm { font-size: 11pt !important; }
-    .resume-xs { font-size: 10pt !important; }
-  }
+  /* @media print {
+    .text-resume-xl { font-size: 18pt !important; }
+    .text-resume-lg { font-size: 14pt !important; }
+    .text-resume-base { font-size: 12pt !important; }
+    .text-resume-sm { font-size: 11pt !important; }
+    .text-resume-xs { font-size: 10pt !important; }
+  } */
 }
