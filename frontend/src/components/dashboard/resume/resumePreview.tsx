@@ -264,10 +264,20 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
     //   </div>
     // </div>
     <div className={cn(
-      "w-1/2 overflow-y-auto hidden md:block",
+      className ? className : "w-1/2 overflow-y-auto hidden md:block",
       preview?"w-full block": "hidden"
     )}>
-      <div className="w-full grow bg-white">
+      <div className="w-full grow bg-white relative">
+         {/* Floating Download Button */}
+        <button
+        onClick={handlePrint}
+        className={cn(
+          "top-4 right-4 z-10 bg-teal-600 hover:bg-teal-700 text-white shadow-lg p-3 rounded-full transition-all duration-200 hover:shadow-xl",
+          contentRef ? "hidden" : "absolute",
+        )}
+      >
+        <Download className="w-5 h-5" />
+      </button>
       {/* Header Section */}
      <div className="w-full min-h-[70px] max-h-[25%] bg-gray-800 text-white p-7 sm:p-4 flex gap-5 sm:gap-4 justify-center items-center">
   {/* Profile Image */}
@@ -307,7 +317,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       )}
       {email && (
         <li className="flex items-center gap-2">
-          <Mail className="w-4 h-4" />
+          <Mail className="w-6 h-6" />
           {email}
         </li>
       )}
