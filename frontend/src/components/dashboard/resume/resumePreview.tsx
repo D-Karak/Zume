@@ -99,22 +99,24 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       className ? className : "w-1/2 overflow-y-auto hidden md:block",
       preview ? "w-full block" : "hidden"
     )}>
-      <div 
-        id="resume-print-container"
-        className="print-container w-full grow bg-white relative" 
-        ref={componentRef}
-      >
-         {/* Floating Download Button */}
-        <button
+      {/* Print Button - Moved outside the print container */}
+      <button
         onClick={handlePrint}
         className={cn(
-          "top-4 right-4 z-10 bg-teal-600 hover:bg-teal-700 text-white shadow-lg p-3 rounded-full transition-all duration-200 hover:shadow-xl print:hidden no-print",
-          contentRef ? "hidden" : "absolute",
+          "fixed top-4 right-4 z-50 bg-teal-600 hover:bg-teal-700 text-white shadow-lg p-3 rounded-full transition-all duration-200 hover:shadow-xl print:hidden no-print",
+          contentRef ? "hidden" : "block",
         )}
       >
         <Download className="w-5 h-5" />
       </button>
-      {/* Header Section */}
+
+      {/* Resume Container */}
+      <div 
+        id="resume-print-container"
+        className="print-container w-full grow bg-white relative max-w-[21cm] mx-auto" 
+        ref={componentRef}
+      >
+         {/* Header Section */}
      <div className="header-section w-full min-h-[70px] max-h-[25%] bg-gray-800 text-white p-6 flex gap-5 sm:gap-4 justify-center items-center">
   {/* Profile Image */}
   {photo && (
