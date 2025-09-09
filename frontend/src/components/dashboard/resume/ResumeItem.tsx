@@ -37,10 +37,10 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
 const reactToPrintFn = useReactToPrint({
-  content: () => contentRef.current, // ✅ only print resume
+  // @ts-expect-error - react-to-print types don't match current API
+  contentRef:contentRef, 
   removeAfterPrint: true,
   documentTitle: `${resume.title || "Resume"}`,
-    // @ts-expect-error - react-to-print types don't match current API
 
   pageStyle: `
     @page {
@@ -49,43 +49,45 @@ const reactToPrintFn = useReactToPrint({
     }
 
     @media print {
-      html, body {
-        margin: 0;
-        padding: 0;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        html, body {
+          height: 100%;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: hidden;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          forced-color-adjust: exact !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        #resume-print-container,
+        #resume-print-container * {
+          visibility: visible;
+          print-color-adjust: exact !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+        #resume-print-container {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+        }
+        .header-section {
+          background-color: #1f2937 !important;
+          color: white !important;
+          print-color-adjust: exact !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+        button, .no-print {
+          display: none !important;
+        }
+        .text-resume-xl { font-size: 18pt !important; }
+        .text-resume-lg { font-size: 14pt !important; }
+        .text-resume-base { font-size: 12pt !important; }
+        .text-resume-sm { font-size: 11pt !important; }
+        .text-resume-xs { font-size: 10pt !important; }
       }
-
-      button, .no-print {
-        display: none !important;
-      }
-
-      .print-container {
-        box-shadow: none !important;
-        border: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 210mm !important;
-        min-height: 297mm !important;
-      }
-
-      p, span, li {
-        color: #222 !important;
-      }
-
-      .skill-badge {
-        background-color: #f3f4f6 !important;
-        color: #111 !important;
-      }
-
-      .section-divider {
-        border-color: #e5e7eb !important;
-      }
-
-      .header-section span, .header-section p {
-        color: #fff !important;
-      }
-    }
   `,
 });
 

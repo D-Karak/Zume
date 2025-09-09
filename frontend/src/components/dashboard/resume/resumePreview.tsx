@@ -96,7 +96,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       {/* ✅ Attach ref here */}
       <div
         id="resume-print-container"
-        ref={componentRef}
+        ref={contentRef?contentRef:componentRef}
         className="print-container w-full grow bg-white relative"
       >
         {/* Floating Download Button */}
