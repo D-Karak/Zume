@@ -32,61 +32,63 @@ interface ResumeItemProps {
 }
 
 export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-  const wasUpdated = resume.updatedAt !== resume.createdAt;
-  const reactToPrintFn = useReactToPrint({
+  const wasUpdated = resume.createdAt !== resume.updatedAt;
+  const contentRef = useRef<HTMLDivElement>(null);
+
+const reactToPrintFn = useReactToPrint({
+  content: () => contentRef.current, // ✅ only print resume
+  removeAfterPrint: true,
+  documentTitle: `${resume.title || "Resume"}`,
     // @ts-expect-error - react-to-print types don't match current API
-    contentRef: contentRef,
-    removeAfterPrint: true,
-    documentTitle: `${resume.title || "Resume"}`,
-    pageStyle: `
-      @page {
-        size: A4;
+
+  pageStyle: `
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
         margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
-      @media print {
-        html, body {
-          margin: 0;
-          padding: 0;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-
-        button, .no-print {
-          display: none !important;
-        }
-
-        .print-container {
-          box-shadow: none !important;
-          border: none !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          width: 210mm !important;
-          min-height: 297mm !important;
-        }
-
-        p, span, li {
-          color: #222 !important;
-        }
-
-        .skill-badge {
-          background-color: #f3f4f6 !important;
-          color: #111 !important;
-        }
-
-        .section-divider {
-          border-color: #e5e7eb !important;
-        }
-        
-        .header-section span,.header-section p {
-          color: #fff !important;
-        }
+      button, .no-print {
+        display: none !important;
       }
-    `,
-  });
+
+      .print-container {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 210mm !important;
+        min-height: 297mm !important;
+      }
+
+      p, span, li {
+        color: #222 !important;
+      }
+
+      .skill-badge {
+        background-color: #f3f4f6 !important;
+        color: #111 !important;
+      }
+
+      .section-divider {
+        border-color: #e5e7eb !important;
+      }
+
+      .header-section span, .header-section p {
+        color: #fff !important;
+      }
+    }
+  `,
+});
+
 
  
 
@@ -96,7 +98,7 @@ export default function ResumeItem({ resume, onDeleted }: ResumeItemProps) {
         <Link href={`/dashboard/resume/editor?resumeId=${resume.id}`}>
           <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             {/* Resume Preview Container */}
-            <div className="relative h-[280px] overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 ">
+            <div className="relative h-[280px] overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 hidden lg:block">
               <div className="absolute inset-0 p-4 hover:blur-2xl">
                 <div className="transform scale-[0.35] sm:scale-[0.4] origin-top-left w-[285%] sm:w-[250%]">
                   <ResumePreview

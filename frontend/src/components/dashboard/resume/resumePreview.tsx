@@ -32,93 +32,84 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
   } = resumeData;
 
   const componentRef = useRef<HTMLDivElement>(null);
-  const handlePrint = useReactToPrint({
-    // @ts-expect-error - react-to-print types don't match current API
-    contentRef:  componentRef,
+   const handlePrint = useReactToPrint({
+      // @ts-expect-error - react-to-print types don't match current API
+
+    contentRef: componentRef,
     removeAfterPrint: true,
     documentTitle: `${title || "Resume"}`,
     pageStyle: `
-    @page {
-      size: A4;
-      margin: 0;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
-    @media print {
-      html, body {
-        height: 100vh;
-        width: 100%;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+      @page {
+        size: A4;
+        margin: 0;
       }
-
-      body > *:not(#resume-print-container) {
-        display: none !important;
+      @media print {
+        html, body {
+          height: 100%;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: hidden;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          forced-color-adjust: exact !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        #resume-print-container,
+        #resume-print-container * {
+          visibility: visible;
+          print-color-adjust: exact !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+        #resume-print-container {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+        }
+        .header-section {
+          background-color: #1f2937 !important;
+          color: white !important;
+          print-color-adjust: exact !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+        button, .no-print {
+          display: none !important;
+        }
+        .text-resume-xl { font-size: 18pt !important; }
+        .text-resume-lg { font-size: 14pt !important; }
+        .text-resume-base { font-size: 12pt !important; }
+        .text-resume-sm { font-size: 11pt !important; }
+        .text-resume-xs { font-size: 10pt !important; }
       }
-
-      #resume-print-container {
-        display: block !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 21cm !important;
-        height: 29.7cm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        visibility: visible !important;
-      }
-
-      #resume-print-container * {
-        visibility: visible !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      .header-section {
-        background-color: #1f2937 !important;
-        color: white !important;
-      }
-
-      button, .no-print {
-        display: none !important;
-      }
-
-      .text-resume-xl { font-size: 18pt !important; }
-      .text-resume-lg { font-size: 14pt !important; }
-      .text-resume-base { font-size: 12pt !important; }
-      .text-resume-sm { font-size: 11pt !important; }
-      .text-resume-xs { font-size: 10pt !important; }
-    }
-  `,
+    `,
   });
 
   return (
-    <div className={cn(
-      className ? className : "w-1/2 overflow-y-auto hidden md:block",
-      preview ? "w-full block" : "hidden"
-    )}>
-      {/* Print Button - Moved outside the print container */}
-      <button
-        onClick={handlePrint}
-        className={cn(
-          "fixed top-4 right-4 z-50 bg-teal-600 hover:bg-teal-700 text-white shadow-lg p-3 rounded-full transition-all duration-200 hover:shadow-xl print:hidden no-print",
-          contentRef ? "hidden" : "block",
-        )}
-      >
-        <Download className="w-5 h-5" />
-      </button>
-
-      {/* Resume Container */}
-      <div 
+    <div
+      className={cn(
+        className ? className : "w-1/2 overflow-y-auto hidden md:block",
+        preview ? "w-full block" : "hidden"
+      )}
+    >
+      {/* ✅ Attach ref here */}
+      <div
         id="resume-print-container"
-        className="print-container w-full grow bg-white relative max-w-[21cm] mx-auto" 
         ref={componentRef}
+        className="print-container w-full grow bg-white relative"
       >
-         {/* Header Section */}
+        {/* Floating Download Button */}
+        <button
+          onClick={handlePrint}
+          className={cn(
+            "top-4 right-4 z-10 bg-teal-600 hover:bg-teal-700 text-white shadow-lg p-3 rounded-full transition-all duration-200 hover:shadow-xl print:hidden no-print",
+            "absolute"
+          )}
+        >
+          <Download className="w-5 h-5" />
+        </button>
+      {/* Header Section */}
      <div className="header-section w-full min-h-[70px] max-h-[25%] bg-gray-800 text-white p-6 flex gap-5 sm:gap-4 justify-center items-center">
   {/* Profile Image */}
   {photo && (
