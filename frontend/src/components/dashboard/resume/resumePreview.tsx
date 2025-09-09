@@ -33,6 +33,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
 
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
+    // contentRef: componentRef,
     // @ts-expect-error - react-to-print types don't match current API
     contentRef:  componentRef,
     removeAfterPrint: true,
@@ -43,34 +44,66 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
       margin: 0;
     }
 
-    @media print {
-      body {
-        margin: 0;
-        padding: 0;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+     @media print {
+      html, body {
+        height: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        forced-color-adjust: exact !important;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      #resume-print-container,
+      #resume-print-container * {
+        visibility: visible;
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+      }
+
+      #resume-print-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+
+      .header-section {
+        background-color: #1f2937 !important;
+        color: white !important;
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
       }
 
       button, .no-print {
         display: none !important;
       }
-          .text-resume-xl { font-size: 18pt !important; }
-    .text-resume-lg { font-size: 14pt !important; }
-    .text-resume-base { font-size: 12pt !important; }
-    .text-resume-sm { font-size: 11pt !important; }
-    .text-resume-xs { font-size: 10pt !important; }
-          
+
+    
+      .text-resume-xl { font-size: 18pt !important; }
+      .text-resume-lg { font-size: 14pt !important; }
+      .text-resume-base { font-size: 12pt !important; }
+      .text-resume-sm { font-size: 11pt !important; }
+      .text-resume-xs { font-size: 10pt !important; }
     }
   `,
   });
 
   return (
-   
     <div className={cn(
       className ? className : "w-1/2 overflow-y-auto hidden md:block",
-      preview?"w-full block": "hidden"
+      preview ? "w-full block" : "hidden"
     )}>
-      <div className="print-container w-full grow bg-white relative" ref={ componentRef}>
+      <div 
+        id="resume-print-container"
+        className="print-container w-full grow bg-white relative" 
+        ref={componentRef}
+      >
          {/* Floating Download Button */}
         <button
         onClick={handlePrint}
