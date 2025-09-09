@@ -33,7 +33,6 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
 
   const componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
-    // contentRef: componentRef,
     // @ts-expect-error - react-to-print types don't match current API
     contentRef:  componentRef,
     removeAfterPrint: true,
@@ -42,49 +41,52 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
     @page {
       size: A4;
       margin: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
-     @media print {
+    @media print {
       html, body {
-        height: 100%;
+        height: 100vh;
+        width: 100%;
         margin: 0 !important;
         padding: 0 !important;
         overflow: hidden;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        forced-color-adjust: exact !important;
       }
 
-      body * {
-        visibility: hidden;
-      }
-
-      #resume-print-container,
-      #resume-print-container * {
-        visibility: visible;
-        print-color-adjust: exact !important;
-        -webkit-print-color-adjust: exact !important;
+      body > *:not(#resume-print-container) {
+        display: none !important;
       }
 
       #resume-print-container {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 21cm !important;
+        height: 29.7cm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        visibility: visible !important;
+      }
+
+      #resume-print-container * {
+        visibility: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .header-section {
         background-color: #1f2937 !important;
         color: white !important;
-        print-color-adjust: exact !important;
-        -webkit-print-color-adjust: exact !important;
       }
 
       button, .no-print {
         display: none !important;
       }
 
-    
       .text-resume-xl { font-size: 18pt !important; }
       .text-resume-lg { font-size: 14pt !important; }
       .text-resume-base { font-size: 12pt !important; }
