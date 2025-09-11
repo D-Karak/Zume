@@ -192,8 +192,10 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             {workExperiences.map((work, idx) => (
               <div key={idx} className="mb-3">
                 <h3 className="text-resume-base font-semibold">{work.position}</h3>
-                <p className="text-resume-sm text-teal-600">{work.company}</p>
+               <div className="flex items-center justify-between mb-1">
+                 <p className="text-resume-sm text-teal-600">{work.company}</p>
                 <span className="text-resume-xs italic text-gray-500">{work.startDate} - {work.endDate}</span>
+               </div>
                 <p className="text-resume-base text-gray-700">{work.description}</p>
               </div>
             ))}

@@ -182,9 +182,9 @@ html{
   }
 
   .text-resume-sm {
-    font-size: clamp(10px, 0.8vw, 25px);
+    font-size: clamp(10px, 0.9vw, 25px);
     line-height: 1.4;
-    font-weight: 400;
+    font-weight: 600;
   }
 
   .text-resume-xs {
