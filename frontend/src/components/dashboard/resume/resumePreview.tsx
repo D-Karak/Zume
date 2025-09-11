@@ -208,9 +208,11 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             <h2 className="text-resume-lg text-slate-800 mb-2">Education</h2>
             {educations.map((edu, idx) => (
               <div key={idx} className="mb-3">
-                <h3 className="text-resume-base font-semibold">{edu.degree}</h3>
+                  <h3 className="text-resume-base font-semibold">{edu.degree}</h3>
+                <div className="flex items-center justify-between mb-1">
                 <p className="text-resume-sm text-teal-600">{edu.university}</p>
                 <span className="text-resume-xs italic text-gray-500">{edu.startDate} - {edu.endDate}</span>
+                </div>
               </div>
             ))}
           </section>
