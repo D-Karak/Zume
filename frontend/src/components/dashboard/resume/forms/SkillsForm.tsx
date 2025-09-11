@@ -74,12 +74,12 @@ export default function SkillsForm({ resumeData, setResumeData }: EditorFormProp
               <Tag className="h-4 w-4 text-teal-600/60" />
             </div>
             <Textarea
-              {...form.register("skills")}
-              value={getSkillsString(skills)}
-              onChange={(e) => {
-                const skillsArray = e.target.value.split(',').map(skill => skill.trim()).filter(Boolean);
-                form.setValue("skills", skillsArray);
-              }}
+              {...form.register("skills", {
+                setValueAs: (value: string) => {
+                  // Only split into array when saving/submitting
+                  return value==="string"?value.split(',').map(skill => skill.trim()).filter(Boolean):value;
+                }
+              })}
               placeholder="Enter your skills, separated by commas (e.g., JavaScript, React, Node.js, Python, AWS)"
               className="min-h-[120px] pl-10 pr-4 py-3 resize-none border-gray-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 rounded-lg transition-all duration-200 placeholder:text-gray-400"
               style={{

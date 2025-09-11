@@ -120,7 +120,7 @@ export function ResumePreview({ resumeData, contentRef, className, preview }: Re
             ? photo
             : photo instanceof File
             ? URL.createObjectURL(photo)
-            : "/placeholder-profile.jpg"
+            : ""
         }
         width={100}
         height={100}
