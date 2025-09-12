@@ -90,8 +90,8 @@ npm run dev
 ```
 
 The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Frontend: [http://localhost:3000](https://zumeai.vercel.app/)
+- Backend API: [http://localhost:5000](https://zume-6lql.onrender.com)
 
 ## Deployment
 
