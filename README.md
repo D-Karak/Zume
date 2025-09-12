@@ -118,7 +118,7 @@ This project is licensed under the ISC License.
 <img width="1517" height="723" alt="ScreenShot Tool -20250912112224" src="https://github.com/user-attachments/assets/dee05f1a-809a-4d3f-a3bf-74d6361c0e50" />
 <img width="1517" height="723" alt="ScreenShot Tool -20250912112246" src="https://github.com/user-attachments/assets/36d3df6b-f7df-498c-b03e-64203ecec698" />
 
-
+## Acknowledgement
 - [Clerk](https://clerk.dev/) for authentication
 - [Shadcn UI](https://ui.shadcn.com/) for components
 - [Prisma](https://www.prisma.io/) for database ORM
