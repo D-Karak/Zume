@@ -111,7 +111,13 @@ The application will be available at:
 
 This project is licensed under the ISC License.
 
-## Acknowledgments
+## Screenshots
+<img width="1501" height="3654" alt="ScreenShot Tool -20250912111927" src="https://github.com/user-attachments/assets/8097733d-c9f5-4a96-95e5-a7b63ebe3e3b" />
+<img width="1517" height="723" alt="ScreenShot Tool -20250912112124" src="https://github.com/user-attachments/assets/ae2208b1-5b5e-4b8e-a0c8-1028fd99e1f4" />
+<img width="215" height="466" alt="ScreenShot Tool -20250912112157" src="https://github.com/user-attachments/assets/609b2a73-16c5-4795-8716-6945c31a514c" />
+<img width="1517" height="723" alt="ScreenShot Tool -20250912112224" src="https://github.com/user-attachments/assets/dee05f1a-809a-4d3f-a3bf-74d6361c0e50" />
+<img width="1517" height="723" alt="ScreenShot Tool -20250912112246" src="https://github.com/user-attachments/assets/36d3df6b-f7df-498c-b03e-64203ecec698" />
+
 
 - [Clerk](https://clerk.dev/) for authentication
 - [Shadcn UI](https://ui.shadcn.com/) for components
