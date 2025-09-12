@@ -11,7 +11,8 @@ Zume is a modern web application that helps job seekers manage their job applica
 
 - **Job Application Tracker**
   - Track application status
-  - Manage multiple job applications
+  - Manage multiple job applications (under Process)
+  - Subscription based system (under Process)
   - Organize by company and position
 
 - **User Authentication**
